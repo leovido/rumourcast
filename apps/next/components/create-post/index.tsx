@@ -24,14 +24,13 @@ import { Checkbox } from '../ui/checkbox'
 const MAX_EMBEDS = 2
 
 export function CreatePost() {
+  const [isUploadImageAvailable] = useState(false)
   const {
     text,
     setText,
     createPost,
     state,
     quote,
-    embed,
-    setEmbed,
     setQuote,
     confetti,
     setConfetti,
@@ -48,13 +47,6 @@ export function CreatePost() {
     const warpcastMatches = Array.from(e.target.value.matchAll(warpcastRegex) || []).map(
       (match) => match[0]
     )
-
-    // Check for Twitter URLs
-    const twitterRegex = /https:\/\/(twitter\.com|x\.com)\/[^/]+\/status\/\d+/g
-    const twitterMatches = Array.from(e.target.value.matchAll(twitterRegex) || []).map(
-      (match) => match[0]
-    )
-
     // Try to set quote from Warpcast URLs
     if (warpcastMatches.length > 0) {
       const currentHash = quote?.hash
@@ -69,33 +61,26 @@ export function CreatePost() {
         })
       }
     }
-    // Handle Twitter URLs
-    if (twitterMatches.length > 0) {
-      const currentEmbed = embed
-      const twitterUrl = twitterMatches[0]
-
-      if (!currentEmbed || currentEmbed !== twitterUrl) {
-        setEmbed(twitterUrl)
-      }
-    }
   }
+
+  
 
   return (
     <div className="flex flex-col gap-4">
       <RemoveableParent />
       <Textarea
-        value={text ?? ''}
-        onChange={handleSetText}
-        className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950 border border-zinc-700"
-        placeholder="What's happening, anon?"
-      />
+  defaultValue="I heard a rumour... "
+  text={text ?? ''}
+  onChange={handleSetText}
+  className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950/50 border border-zinc-900/20"
+/>
       <RevealPhrase />
       <RemoveableImage />
       <RemoveableEmbed />
       <RemoveableQuote />
       <div className="flex flex-col sm:flex-row justify-between gap-4 xs:gap-0">
         <div className="flex gap-4">
-          <UploadImage />
+          {isUploadImageAvailable && <UploadImage />}
           <EmbedLink />
           <ParentCast />
           <QuoteCast />
@@ -105,7 +90,7 @@ export function CreatePost() {
           <p className="font-medium text-zinc-400">{`${length} / 320`}</p>
           <Button
             onClick={createPost}
-            className="font-bold text-md rounded-md hover:scale-105 transition-all duration-300"
+            className="font-bold text-base rounded-full hover:scale-105 transition-all duration-300 py-6"
             disabled={!['idle', 'success', 'error'].includes(state.status)}
           >
             {state.status === 'generating' ? (
@@ -119,7 +104,7 @@ export function CreatePost() {
                 <p>Awaiting signature</p>
               </div>
             ) : (
-              'Post anonymously'
+              'Cast rumour 👀'
             )}
           </Button>
         </div>
@@ -591,7 +576,7 @@ function QuoteCast() {
         <DialogHeader>
           <DialogTitle>Quote post</DialogTitle>
           <DialogDescription>
-            You can quote posts from Warpcast or X/Twitter.
+            You can quote posts from Warpcast.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col  gap-4 py-4">
@@ -599,7 +584,7 @@ function QuoteCast() {
             id="quote"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="https://warpcast.com/..., https://x.com/..."
+            placeholder="https://warpcast.com/..."
           />
         </div>
         <DialogFooter>

@@ -17,10 +17,8 @@ import { Heart, Loader2, MessageSquare, RefreshCcw } from 'lucide-react'
 import { useState } from 'react'
 import { useCreatePost } from '../create-post/context'
 import { useAccount, useSignMessage } from 'wagmi'
-import { Checkbox } from '../ui/checkbox'
 import { useBalance } from '@/hooks/use-balance'
 import { TOKEN_CONFIG } from '@anon/utils/src/config'
-import { usePromotePost } from '@/hooks/use-promote-post'
 import { useDeletePost } from '@/hooks/use-delete-post'
 import { api } from '@/lib/api'
 import { useRouter } from 'next/navigation'
@@ -53,12 +51,6 @@ export function Post({
     !!balance &&
     balance >= BigInt(TOKEN_CONFIG[tokenAddress].deleteAmount) &&
     cast.tweetId
-
-  const canPromote =
-    address &&
-    !!balance &&
-    balance >= BigInt(TOKEN_CONFIG[tokenAddress].promoteAmount) &&
-    !cast.tweetId
 
   const canReveal = address && !!cast.reveal && !cast.reveal.revealedAt
 
@@ -94,7 +86,7 @@ export function Post({
   const sanitizedText = cleanText(cast.text)
 
   return (
-    <div className="relative [overflow-wrap:anywhere] bg-zinc-900 border border-zinc-700 rounded-lg overflow-hidden">
+    <div className="relative [overflow-wrap:anywhere] border border-[#C848FF] rounded-2xl overflow-hidden">
       <div className="flex flex-row gap-4  p-4 sm:p-6  ">
         <div className="flex flex-col gap-2 w-full">
           <div className="flex flex-col gap-4 sm:flex-row justify-between">
@@ -129,28 +121,24 @@ export function Post({
               >
                 <img src="/farcaster.svg" alt="Warpcast" className="w-4 h-4 invert" />
               </a>
-              {cast.tweetId && (
-                <a
-                  href={`https://x.com/i/status/${cast.tweetId}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img src="/x.svg" alt="Warpcast" className="w-4 h-4 invert" />
-                </a>
-              )}
             </div>
           </div>
           {reveal?.revealedAt && <RevealBadge reveal={reveal} />}
-          <div className="font-medium whitespace-pre-wrap">{sanitizedText}</div>
+          <div className="font-normal whitespace-pre-wrap text-[#C848FF]">
+            I heard a rumour...
+          </div>
+          <div className="font-semibold whitespace-pre-wrap">
+            {sanitizedText.replace(/^I heard a rumour.*?\.{2,}(\s|$)/, '')}
+          </div>
           {cast.embeds.map((embed) => {
             if (embed.metadata?.image) {
               return (
-                <img key={embed.url} src={embed.url} alt="embed" className="rounded-xl" />
+                <img key={embed.url} src={embed.url} alt="embed" className="rounded-2xl" />
               )
             }
             if (embed.metadata?.html) {
               return (
-                <div key={embed.url} className="w-full border rounded-xl overflow-hidden">
+                <div key={embed.url} className="w-full border rounded-2xl overflow-hidden">
                   {embed.metadata?.html?.ogImage &&
                     embed.metadata?.html?.ogImage.length > 0 && (
                       <img
@@ -173,7 +161,7 @@ export function Post({
               return (
                 <div
                   key={embed.cast.hash}
-                  className="flex flex-row gap-4 border border-zinc-700 p-4 rounded-xl"
+                  className="flex flex-row gap-4 border border-zinc-700 p-4 rounded-2xl"
                 >
                   <img
                     src={embed.cast.author?.pfp_url}
@@ -200,17 +188,17 @@ export function Post({
           <div className="flex flex-col gap-4 sm:flex-row justify-between">
             <div className="flex flex-row items-center gap-2 mt-2">
               <div className="flex flex-row items-center gap-1.5 ">
-                <MessageSquare size={16} className="text-zinc-400" />
+                <MessageSquare size={18} className="text-zinc-400" />
                 <p className="text-sm font-medium">{formatNumber(cast.replies.count)}</p>
               </div>
               <div className="flex flex-row items-center gap-1.5 ">
-                <RefreshCcw size={16} className="text-zinc-400" />
+                <RefreshCcw size={18} className="text-zinc-400" />
                 <p className="text-sm font-medium ">
                   {formatNumber(cast.reactions.recasts_count)}
                 </p>
               </div>
               <div className="flex flex-row items-center gap-1.5 w-16">
-                <Heart size={16} className="text-zinc-400" />
+                <Heart size={18} className="text-zinc-400" />
                 <p className="text-sm font-medium">
                   {formatNumber(cast.reactions.likes_count)}
                 </p>
@@ -244,7 +232,6 @@ export function Post({
                   tokenAddress={tokenAddress}
                 />
               )}
-              {canPromote && <PromoteButton cast={cast} tokenAddress={tokenAddress} />}
               {canDelete && <DeleteButton cast={cast} tokenAddress={tokenAddress} />}
             </div>
           </div>
@@ -324,76 +311,6 @@ function DeleteButton({ cast, tokenAddress }: { cast: Cast; tokenAddress: string
               </div>
             ) : (
               'Delete'
-            )}
-          </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  )
-}
-
-function PromoteButton({ cast, tokenAddress }: { cast: Cast; tokenAddress: string }) {
-  const { toast } = useToast()
-  const { promotePost, promoteState } = usePromotePost(tokenAddress)
-  const [open, setOpen] = useState(false)
-  const [asReply, setAsReply] = useState(false)
-
-  const handlePromote = async () => {
-    await promotePost(cast.hash, asReply)
-    toast({
-      title: 'Post will be promoted in 1-2 minutes',
-    })
-    setOpen(false)
-  }
-
-  const twitterEmbed = cast.embeds?.find(
-    (e) => e.url?.includes('x.com') || e.url?.includes('twitter.com')
-  )
-
-  return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
-        <p className="text-sm underline decoration-dotted font-semibold cursor-pointer hover:text-red-400">
-          Promote
-        </p>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Promote to X/Twitter?</AlertDialogTitle>
-          <AlertDialogDescription>
-            You will need to delete the post if you want to remove it from X/Twitter.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        {twitterEmbed && (
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="as-reply"
-              checked={asReply}
-              onCheckedChange={(checked) => setAsReply(checked as boolean)}
-            />
-            <label
-              htmlFor="as-reply"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Promote as reply
-            </label>
-          </div>
-        )}
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button onClick={handlePromote} disabled={promoteState.status !== 'idle'}>
-            {promoteState.status === 'generating' ? (
-              <div className="flex flex-row items-center gap-2">
-                <Loader2 className="animate-spin" />
-                <p>Generating proof</p>
-              </div>
-            ) : promoteState.status === 'signature' ? (
-              <div className="flex flex-row items-center gap-2">
-                <Loader2 className="animate-spin" />
-                <p>Awaiting signature</p>
-              </div>
-            ) : (
-              'Promote'
             )}
           </Button>
         </AlertDialogFooter>
