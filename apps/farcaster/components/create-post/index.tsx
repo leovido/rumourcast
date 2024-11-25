@@ -6,7 +6,7 @@ import { Textarea } from '../ui/textarea'
 import { useCreatePost } from './context'
 import { Image, Link, Loader2, Quote, Reply, SquareSlash, X } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
-import { type ReactNode, useEffect, useRef, useState } from 'react'
+import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -27,18 +27,8 @@ const MAX_EMBEDS = 2
 
 export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
   const { sdk } = useSDK()
-  const {
-    text,
-    setText,
-    createPost,
-    status,
-    quote,
-    embed,
-    setEmbed,
-    setQuote,
-    confetti,
-    setConfetti,
-  } = useCreatePost()
+  const { text, setText, createPost, status, quote, setQuote, confetti, setConfetti } =
+    useCreatePost()
 
   const length = new Blob([text ?? '']).size
 
@@ -51,13 +41,6 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
     const warpcastMatches = Array.from(e.target.value.matchAll(warpcastRegex) || []).map(
       (match) => match[0]
     )
-
-    // Check for Twitter URLs
-    const twitterRegex = /https:\/\/(twitter\.com|x\.com)\/[^/]+\/status\/\d+/g
-    const twitterMatches = Array.from(e.target.value.matchAll(twitterRegex) || []).map(
-      (match) => match[0]
-    )
-
     // Try to set quote from Warpcast URLs
     if (warpcastMatches.length > 0) {
       const currentHash = quote?.hash
@@ -72,22 +55,14 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
         })
       }
     }
-    // Handle Twitter URLs
-    if (twitterMatches.length > 0) {
-      const currentEmbed = embed
-      const twitterUrl = twitterMatches[0]
-
-      if (!currentEmbed || currentEmbed !== twitterUrl) {
-        setEmbed(twitterUrl)
-      }
-    }
   }
 
   return (
     <div className="flex flex-col gap-4">
       <RemoveableParent />
       <Textarea
-        value={text ?? ''}
+        defaultValue="I heard a rumour... "
+        text={text ?? ' '}
         onChange={handleSetText}
         className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950 border border-zinc-700"
         placeholder={
@@ -102,7 +77,7 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
       <RemoveableQuote />
       <div className="flex flex-col sm:flex-row justify-between gap-4 xs:gap-0">
         <div className="flex gap-4">
-          <UploadImage />
+          {isUploadImageAvailable && <UploadImage />}
           <EmbedLink />
           <ParentCast />
           <QuoteCast />
@@ -112,8 +87,8 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
           <p className="font-medium text-zinc-400">{`${length} / 320`}</p>
           <Button
             onClick={createPost}
-            className="font-bold text-md rounded-md hover:scale-105 transition-all duration-300"
-            disabled={!['idle', 'success', 'error'].includes(status.status)}
+            className="font-bold text-base rounded-full hover:scale-105 transition-all duration-300 py-6"
+            disabled={!['idle', 'success', 'error'].includes(state.status)}
           >
             {status.status === 'loading' ? (
               <div className="flex flex-row items-center gap-2">
@@ -121,7 +96,7 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
                 <p>Generating proof</p>
               </div>
             ) : (
-              'Post anonymously'
+              'Cast rumour 👀'
             )}
           </Button>
         </div>
@@ -131,26 +106,36 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
           width={window.innerWidth}
           height={window.innerHeight}
           colors={[
-            '#808080', // Mid gray
-            '#999999',
-            '#b3b3b3',
-            '#cccccc',
-            '#e6e6e6',
-            '#ffffff', // Pure white
+            '#C848FF', // Vibrant purple
+            '#FFFFFF', // Pure white
           ]}
           drawShape={(ctx) => {
+            const shapeType = Math.floor(Math.random() * 3) // Randomly pick a shape
             ctx.beginPath()
-            ctx.lineWidth = 3
+            ctx.lineWidth = 2
 
-            // Draw the main curve of the question mark
-            ctx.moveTo(0, -8)
-            ctx.quadraticCurveTo(8, -8, 8, -16)
-            ctx.quadraticCurveTo(8, -30, 0, -30)
-            ctx.quadraticCurveTo(-8, -30, -8, -20)
+            switch (shapeType) {
+              case 0: // Circle
+                ctx.arc(0, 0, 8, 0, Math.PI * 2, true)
+                break
 
-            // Draw the dot of the question mark
-            ctx.moveTo(2, 0)
-            ctx.arc(0, 0, 2, 0, Math.PI * 2, true)
+              case 1: // Star
+                for (let i = 0; i < 5; i++) {
+                  const angle = ((Math.PI * 2) / 5) * i
+                  const x = Math.cos(angle) * 8
+                  const y = Math.sin(angle) * 8
+                  ctx.lineTo(x, y)
+                }
+                ctx.closePath()
+                break
+
+              case 2: // Square
+                ctx.rect(-8, -8, 16, 16)
+                break
+
+              default:
+                break
+            }
 
             ctx.stroke()
             ctx.closePath()
@@ -489,20 +474,19 @@ function Channel() {
   const { sdk } = useSDK()
   const { setChannel, channel } = useCreatePost()
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState(channel?.id ?? '')
+  const [value, setValue] = useState(channel?.id ?? 'rumours')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleSetChannel = async () => {
+  const handleSetChannel = useCallback(async () => {
     if (!value) {
-      // clearing the channel
       setChannel(null)
       setOpen(false)
       return
     }
 
     setLoading(true)
-    setError(null) // Clear any previous error
+    setError(null)
     try {
       const data = await sdk.getFarcasterChannel(value.replace('/', ''))
       if (!data.data) {
@@ -517,7 +501,18 @@ function Channel() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [value, setChannel])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(async () => {
+      if (value !== channel?.id) {
+        await handleSetChannel()
+      }
+    }, 500)
+
+    return () => clearTimeout(timeoutId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -530,7 +525,7 @@ function Channel() {
             <img
               src={channel.image_url}
               alt={channel.name}
-              className="rounded-sm w-full h-full object-cover"
+              className="rounded-full w-full h-full object-cover"
             />
           ) : (
             <SquareSlash />
@@ -547,7 +542,7 @@ function Channel() {
             id="channel"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="memes"
+            placeholder="rumours"
           />
           {error && <p className="text-red-500">{error}</p>}
         </div>
@@ -596,16 +591,14 @@ function QuoteCast() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Quote post</DialogTitle>
-          <DialogDescription>
-            You can quote posts from Warpcast or X/Twitter.
-          </DialogDescription>
+          <DialogDescription>You can quote posts from Warpcast.</DialogDescription>
         </DialogHeader>
         <div className="flex flex-col  gap-4 py-4">
           <Input
             id="quote"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="https://warpcast.com/..., https://x.com/..."
+            placeholder="https://warpcast.com/..."
           />
         </div>
         <DialogFooter>

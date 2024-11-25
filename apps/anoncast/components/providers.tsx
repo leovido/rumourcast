@@ -10,8 +10,8 @@ import { ThemeProvider } from 'next-themes'
 import { SDKProvider } from '@anonworld/react'
 
 const config = getDefaultConfig({
-  appName: 'anoncast',
-  projectId: '302e299e8d6c292b6aeb9f313321e134',
+  appName: 'RumourCast',
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
   chains: [base],
   ssr: true,
 })
