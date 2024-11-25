@@ -25,8 +25,7 @@ export default function ActionComponent({
 
   const BALANCE = data ? data / BigInt(10 ** 18) : BigInt(0)
   const FARCASTER_POST = BigInt(TOKEN_CONFIG[ANON_ADDRESS].postAmount) / BigInt(10 ** 18)
-  const TWITTER_PROMOTE =
-    BigInt(TOKEN_CONFIG[ANON_ADDRESS].promoteAmount) / BigInt(10 ** 18)
+
   const DELETE_POST = BigInt(TOKEN_CONFIG[ANON_ADDRESS].deleteAmount) / BigInt(10 ** 18)
 
   // Default values for post variant
@@ -89,49 +88,75 @@ export default function ActionComponent({
               alt="Farcaster"
               className="w-4 h-4 sm:hidden invert"
             />
-          </a>
-        </div>
+            <TokenRequirement
+              tokenAmount={data}
+              tokenNeeded={DELETE_POST}
+              string="Delete rumours"
+              isConnected={!!address && !isLoading}
+            />
+          </ul>
+        </AlertDescription>
+        <div className="flex flex-row gap-2 justify-between ">
+          <div className="flex flex-row gap-4">
 
-        <div className="flex flex-row gap-4 justify-end">
-          <a
-            href="https://dexscreener.com/base/0xc4ecaf115cbce3985748c58dccfc4722fef8247c"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm decoration-dotted underline font-medium"
-          >
-            DEX Screener
-          </a>
-          <a
-            href="https://app.uniswap.org/swap?outputCurrency=0x0Db510e79909666d6dEc7f5e49370838c16D950f&chain=base"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm decoration-dotted underline font-medium"
-          >
-            Uniswap
-          </a>
-          <a
-            href="https://github.com/Slokh/anoncast"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm decoration-dotted underline font-medium"
-          >
-            Github
-          </a>
+            <a
+              href="https://warpcast.com/rumour"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+            >
+              <span className="hidden sm:inline">Farcaster</span>
+              <img
+                src="/farcaster.svg"
+                alt="Farcaster"
+                className="w-4 h-4 sm:hidden invert"
+              />
+            </a>
+          </div>
+
+          <div className="flex flex-row gap-4 justify-end">
+            <a
+              href="https://dexscreener.com/base/0xe43e9d214a4bcb01c2fade45359bea37e74f314e"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+            >
+              DEX Screener
+            </a>
+            <a
+              href="https://app.uniswap.org/swap?outputCurrency=0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8&chain=base"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+            >
+              Uniswap
+            </a>
+            <a
+              href="https://github.com/leovido/rumourcast"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+            >
+              Github
+            </a>
+          </div>
         </div>
-      </div>
-      {address && !isLoading ? (
-        FARCASTER_POST > BALANCE ? (
-          <a
-            href={`https://app.uniswap.org/swap?outputCurrency=${tokenAddress}&chain=base`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded flex flex-row items-center justify-between gap-2">
-              <p className="font-bold">{`Not enough tokens to post. Buy ${
-                FARCASTER_POST - BALANCE
-              } more.`}</p>
-            </div>
-          </a>
+        {address && !isLoading ? (
+          FARCASTER_POST > BALANCE ? (
+            <a
+              href={`https://app.uniswap.org/swap?outputCurrency=${tokenAddress}&chain=base`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded flex flex-row items-center justify-between gap-2">
+                <p className="font-bold">{`Not enough tokens to post. Buy ${
+                  FARCASTER_POST - BALANCE
+                } more.`}</p>
+              </div>
+            </a>
+          ) : (
+            <CreatePost />
+          )
         ) : (
           <CreatePost variant={variant} />
         )
@@ -175,7 +200,7 @@ function TokenRequirement({
             <span>{'  '}</span>
           </>
         )}
-        {`${tokenNeeded.toLocaleString()} $ANON: ${string}`}
+        {`${tokenNeeded.toLocaleString()} $RUMOUR: ${string}`}
       </p>
     </li>
   )

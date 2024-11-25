@@ -11,18 +11,18 @@ const main = async () => {
 }
 
 main().then(() => {
-  process.exit(0)
-})
+  process.exit(0);
+});
 
 async function buildAndCacheTree(
   tokenAddress: string,
   proofType: ProofType,
   minAmount: string
 ) {
-  const nextTree = await buildHoldersTree({ tokenAddress, minAmount })
+  const nextTree = await buildHoldersTree({ tokenAddress, minAmount });
   if (!nextTree) {
-    return
+    return;
   }
-  console.log(proofType, nextTree.root)
-  await setTree(tokenAddress, proofType, nextTree)
+  console.log(proofType, nextTree.root);
+  await setTree(tokenAddress, proofType, nextTree);
 }

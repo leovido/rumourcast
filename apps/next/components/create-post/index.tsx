@@ -30,8 +30,6 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
     createPost,
     state,
     quote,
-    embed,
-    setEmbed,
     setQuote,
     confetti,
     setConfetti,
@@ -48,13 +46,6 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
     const warpcastMatches = Array.from(e.target.value.matchAll(warpcastRegex) || []).map(
       (match) => match[0]
     )
-
-    // Check for Twitter URLs
-    const twitterRegex = /https:\/\/(twitter\.com|x\.com)\/[^/]+\/status\/\d+/g
-    const twitterMatches = Array.from(e.target.value.matchAll(twitterRegex) || []).map(
-      (match) => match[0]
-    )
-
     // Try to set quote from Warpcast URLs
     if (warpcastMatches.length > 0) {
       const currentHash = quote?.hash
@@ -69,16 +60,9 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
         })
       }
     }
-    // Handle Twitter URLs
-    if (twitterMatches.length > 0) {
-      const currentEmbed = embed
-      const twitterUrl = twitterMatches[0]
-
-      if (!currentEmbed || currentEmbed !== twitterUrl) {
-        setEmbed(twitterUrl)
-      }
-    }
   }
+
+  
 
   return (
     <div className="flex flex-col gap-4">
@@ -99,7 +83,7 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
       <RemoveableQuote />
       <div className="flex flex-col sm:flex-row justify-between gap-4 xs:gap-0">
         <div className="flex gap-4">
-          <UploadImage />
+          {isUploadImageAvailable && <UploadImage />}
           <EmbedLink />
           <ParentCast />
           <QuoteCast />
@@ -109,7 +93,7 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
           <p className="font-medium text-zinc-400">{`${length} / 320`}</p>
           <Button
             onClick={createPost}
-            className="font-bold text-md rounded-md hover:scale-105 transition-all duration-300"
+            className="font-bold text-base rounded-full hover:scale-105 transition-all duration-300 py-6"
             disabled={!['idle', 'success', 'error'].includes(state.status)}
           >
             {state.status === 'generating' ? (
@@ -123,7 +107,7 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
                 <p>Awaiting signature</p>
               </div>
             ) : (
-              'Post anonymously'
+              'Cast rumour 👀'
             )}
           </Button>
         </div>
@@ -595,7 +579,7 @@ function QuoteCast() {
         <DialogHeader>
           <DialogTitle>Quote post</DialogTitle>
           <DialogDescription>
-            You can quote posts from Warpcast or X/Twitter.
+            You can quote posts from Warpcast.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col  gap-4 py-4">
@@ -603,7 +587,7 @@ function QuoteCast() {
             id="quote"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="https://warpcast.com/..., https://x.com/..."
+            placeholder="https://warpcast.com/..."
           />
         </div>
         <DialogFooter>
