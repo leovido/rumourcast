@@ -7,12 +7,12 @@ import { ConnectButton } from '@/components/connect-button'
 import { Logo } from '@/components/logo'
 
 export const metadata: Metadata = {
-  title: 'anoncast',
+  title: 'rumourcast',
   description: 'Post anonymously to Farcaster.',
   openGraph: {
-    title: 'anoncast',
+    title: 'rumourcast',
     description: 'Post anonymously to Farcaster.',
-    images: ['/anon.webp'],
+    images: ['/rumour.webp'],
   },
 }
 

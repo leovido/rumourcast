@@ -17,14 +17,13 @@ export default function ActionComponent({
 
   const BALANCE = data ? data / BigInt(10 ** 18) : BigInt(0)
   const FARCASTER_POST = BigInt(TOKEN_CONFIG[ANON_ADDRESS].postAmount) / BigInt(10 ** 18)
-  const TWITTER_PROMOTE =
-    BigInt(TOKEN_CONFIG[ANON_ADDRESS].promoteAmount) / BigInt(10 ** 18)
+
   const DELETE_POST = BigInt(TOKEN_CONFIG[ANON_ADDRESS].deleteAmount) / BigInt(10 ** 18)
 
   return (
     <Alert className="flex flex-col gap-4 bg-zinc-900 border border-zinc-700">
       <AlertTitle className="font-semibold text-xl">
-        Post anonymously to Farcaster and X/Twitter
+        Post anonymously to Farcaster
       </AlertTitle>
       <AlertDescription>
         <p className="text-zinc-400">
@@ -44,12 +43,6 @@ export default function ActionComponent({
           />
           <TokenRequirement
             tokenAmount={data}
-            tokenNeeded={TWITTER_PROMOTE}
-            string="Promote posts to X/Twitter"
-            isConnected={!!address && !isLoading}
-          />
-          <TokenRequirement
-            tokenAmount={data}
             tokenNeeded={DELETE_POST}
             string="Delete posts"
             isConnected={!!address && !isLoading}
@@ -58,18 +51,9 @@ export default function ActionComponent({
       </AlertDescription>
       <div className="flex flex-row gap-2 justify-between ">
         <div className="flex flex-row gap-4">
-          <a
-            href="https://x.com/anoncast_"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm decoration-dotted underline font-medium"
-          >
-            <span className="hidden sm:inline">X/Twitter</span>
-            <img src="/x.svg" alt="X/Twitter" className="w-4 h-4 sm:hidden invert" />
-          </a>
 
           <a
-            href="https://warpcast.com/anoncast"
+            href="https://warpcast.com/rumour"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm decoration-dotted underline font-medium"
@@ -85,7 +69,7 @@ export default function ActionComponent({
 
         <div className="flex flex-row gap-4 justify-end">
           <a
-            href="https://dexscreener.com/base/0xc4ecaf115cbce3985748c58dccfc4722fef8247c"
+            href="https://dexscreener.com/base/0xe43e9d214a4bcb01c2fade45359bea37e74f314e"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm decoration-dotted underline font-medium"
@@ -93,7 +77,7 @@ export default function ActionComponent({
             DEX Screener
           </a>
           <a
-            href="https://app.uniswap.org/swap?outputCurrency=0x0Db510e79909666d6dEc7f5e49370838c16D950f&chain=base"
+            href="https://app.uniswap.org/swap?outputCurrency=0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8&chain=base"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm decoration-dotted underline font-medium"
@@ -101,7 +85,7 @@ export default function ActionComponent({
             Uniswap
           </a>
           <a
-            href="https://github.com/Slokh/anoncast"
+            href="https://github.com/leovido/rumourcast"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm decoration-dotted underline font-medium"
@@ -166,7 +150,7 @@ function TokenRequirement({
             <span>{'  '}</span>
           </>
         )}
-        {`${tokenNeeded.toLocaleString()} $ANON: ${string}`}
+        {`${tokenNeeded.toLocaleString()} $RUMOUR: ${string}`}
       </p>
     </li>
   )
