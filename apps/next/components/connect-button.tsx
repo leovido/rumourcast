@@ -83,7 +83,7 @@ function Balance() {
 
   return (
     <div className="text-md font-bold bg-white text-black pl-3 pr-2">
-      {`${formatNumber(amount)} ANON`}
+      {`${formatNumber(amount)} RUMOUR`}
     </div>
   )
 }

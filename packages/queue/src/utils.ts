@@ -1,45 +1,47 @@
-import Redis from 'ioredis'
-import { Job, Queue, QueueOptions, Worker } from 'bullmq'
-import { ProofType } from '@anon/utils/src/proofs'
+import Redis from "ioredis";
+import { Job, Queue, QueueOptions, Worker } from "bullmq";
+import { ProofType } from "@anon/utils/src/proofs";
 
 export enum QueueName {
-  Default = 'default',
-  PromotePost = 'promote-post',
+  Default = "default",
+  PromotePost = "promote-post",
 }
 
 export type QueueArgs = {
-  type: ProofType
-  proof: number[]
-  publicInputs: number[][]
-}
+  type: ProofType;
+  proof: number[];
+  publicInputs: number[][];
+};
 
 type QueueType = {
-  [QueueName.Default]: QueueArgs
-  [QueueName.PromotePost]: QueueArgs
-}
+  [QueueName.Default]: QueueArgs;
+  [QueueName.PromotePost]: QueueArgs;
+};
 
 const connection = new Redis(process.env.REDIS_URL as string, {
   maxRetriesPerRequest: null,
-})
+});
 
 const queueOptions: QueueOptions = {
   connection,
   defaultJobOptions: {
     attempts: 3,
     backoff: {
-      type: 'exponential',
+      type: "exponential",
       delay: 1000,
     },
   },
-}
+};
 
 const formatQueueName = (queueName: QueueName) => {
-  return `{${queueName}}`
-}
+  return `{${queueName}}`;
+};
 
-export const getQueue = <N extends QueueName, T>(queueName: N): Queue<QueueType[N]> => {
-  return new Queue<QueueType[N]>(formatQueueName(queueName), queueOptions)
-}
+export const getQueue = <N extends QueueName, T>(
+  queueName: N
+): Queue<QueueType[N]> => {
+  return new Queue<QueueType[N]>(formatQueueName(queueName), queueOptions);
+};
 
 export const getWorker = <N extends QueueName>(
   queueName: N,
@@ -47,5 +49,5 @@ export const getWorker = <N extends QueueName>(
 ): Worker<QueueType[N]> => {
   return new Worker(formatQueueName(queueName), jobFunction, {
     connection,
-  })
-}
+  });
+};

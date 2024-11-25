@@ -36,7 +36,7 @@ async function getConnectedAddress(data: string) {
 
   if (balances.length === 0) return null
 
-  const validBalance = balances.find((b) => BigInt(b.balance) >= BigInt(20000))
+  const validBalance = balances.find((b) => BigInt(b.balance) >= BigInt(5000))
 
   return validBalance?.address || balances[0].address
 }
@@ -68,15 +68,15 @@ export default function CreatePostPage({
         <CircleHelp className="h-4 w-4" />
         <AlertTitle className="font-bold">Post anonymously to Farcaster</AlertTitle>
         <AlertDescription>
-          Must have <b>20,000 $ANON</b> in your wallet to post. Posts are made anonymous
+          Must have <b>5,000 $RUMOUR</b> in your wallet to post. Posts are made anonymous
           using zk proofs. Due to the complex calculations required, it could take up to a
           few minutes to post. We&apos;ll work on speeding this up in the future.
         </AlertDescription>
       </Alert>
-      <a href="https://anoncast.org" target="_blank" rel="noreferrer">
+      <a href="https://rumourcast.xyz" target="_blank" rel="noreferrer">
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded flex flex-row items-center justify-between gap-2">
           <div className="flex flex-row items-center gap-2">
-            <p>Mini-app is currently disabled. Go to anoncast.org to post.</p>
+            <p>Mini-app is currently disabled. Go to rumourcast.xyz to post.</p>
             <ExternalLink size={16} />
           </div>
         </div>

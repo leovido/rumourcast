@@ -30,8 +30,6 @@ export function CreatePost() {
     createPost,
     state,
     quote,
-    embed,
-    setEmbed,
     setQuote,
     confetti,
     setConfetti,
@@ -48,13 +46,6 @@ export function CreatePost() {
     const warpcastMatches = Array.from(e.target.value.matchAll(warpcastRegex) || []).map(
       (match) => match[0]
     )
-
-    // Check for Twitter URLs
-    const twitterRegex = /https:\/\/(twitter\.com|x\.com)\/[^/]+\/status\/\d+/g
-    const twitterMatches = Array.from(e.target.value.matchAll(twitterRegex) || []).map(
-      (match) => match[0]
-    )
-
     // Try to set quote from Warpcast URLs
     if (warpcastMatches.length > 0) {
       const currentHash = quote?.hash
@@ -69,15 +60,6 @@ export function CreatePost() {
         })
       }
     }
-    // Handle Twitter URLs
-    if (twitterMatches.length > 0) {
-      const currentEmbed = embed
-      const twitterUrl = twitterMatches[0]
-
-      if (!currentEmbed || currentEmbed !== twitterUrl) {
-        setEmbed(twitterUrl)
-      }
-    }
   }
 
   return (
@@ -87,7 +69,7 @@ export function CreatePost() {
         value={text ?? ''}
         onChange={handleSetText}
         className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950 border border-zinc-700"
-        placeholder="What's happening, anon?"
+        placeholder="Spill some rumours, anon"
       />
       <RevealPhrase />
       <RemoveableImage />
@@ -591,7 +573,7 @@ function QuoteCast() {
         <DialogHeader>
           <DialogTitle>Quote post</DialogTitle>
           <DialogDescription>
-            You can quote posts from Warpcast or X/Twitter.
+            You can quote posts from Warpcast.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col  gap-4 py-4">
@@ -599,7 +581,7 @@ function QuoteCast() {
             id="quote"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="https://warpcast.com/..., https://x.com/..."
+            placeholder="https://warpcast.com/..."
           />
         </div>
         <DialogFooter>
