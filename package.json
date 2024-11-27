@@ -6,7 +6,7 @@
     "apps/*"
   ],
   "scripts": {
-    "vercel-build": "bun build packages/api/src/index.ts --outdir dist",
+    "vercel-build": "bun run packages/api/src/index.ts --outdir dist",
     "build": "bun run --filter '**' build",
     "next:dev": "bun run --filter @anon/next dev",
     "api:dev": "bun run --filter @anon/api dev",
