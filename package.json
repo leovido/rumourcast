@@ -6,6 +6,7 @@
     "apps/*"
   ],
   "scripts": {
+    "heroku-postbuild": "bun install",
     "build": "bun run --filter '**' build",
     "next:dev": "bun run --filter @anon/next dev",
     "api:dev": "bun run --filter @anon/api dev",
