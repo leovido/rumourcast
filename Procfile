@@ -1,1 +1,0 @@
-   web: bun run api:start
