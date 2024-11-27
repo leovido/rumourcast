@@ -1,0 +1,13 @@
+# Ignore local development files
+node_modules/
+npm-debug.log
+yarn-error.log
+*.log
+*.md
+*.test.js
+*.spec.js
+*.tsbuildinfo
+coverage/
+dist/
+out/
+build/
