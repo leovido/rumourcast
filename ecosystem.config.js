@@ -3,7 +3,7 @@ module.exports = {
     {
       name: "rumourcast-api",
       script: "bun",
-      args: "run src/index.ts", // or your API start script
+      args: "run api:start", // or your API start script
       watch: false,
       env: {
         NODE_ENV: "production",
@@ -13,7 +13,7 @@ module.exports = {
     {
       name: "rumourcast-queue",
       script: "bun",
-      args: "run src/queue.ts", // or your queue start script
+      args: "run queue:start", // or your queue start script
       watch: false,
       env: {
         NODE_ENV: "production",
