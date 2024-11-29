@@ -9,15 +9,15 @@ import Link from 'next/link'
 
 export default function PostFeed({
   tokenAddress,
-  defaultTab = 'trending',
+  defaultTab = 'hot',
 }: {
   tokenAddress: string
-  defaultTab?: 'new' | 'trending'
+  defaultTab?: 'fresh' | 'hot'
 }) {
-  const [selected, setSelected] = useState<'new' | 'trending'>(defaultTab)
+  const [selected, setSelected] = useState<'fresh' | 'hot'>(defaultTab)
 
   const { data: trendingPosts, isLoading: isTrendingLoading } = useQuery({
-    queryKey: ['trending', tokenAddress],
+    queryKey: ['hot', tokenAddress],
     queryFn: async (): Promise<Cast[]> => {
       const response = await api.getTrendingPosts(tokenAddress)
       return response?.casts || []
@@ -25,7 +25,7 @@ export default function PostFeed({
   })
 
   const { data: newPosts, isLoading: isNewLoading } = useQuery({
-    queryKey: ['posts', tokenAddress],
+    queryKey: ['fresh', tokenAddress],
     queryFn: async (): Promise<Cast[]> => {
       const response = await api.getNewPosts(tokenAddress)
       return response?.casts || []
@@ -34,14 +34,14 @@ export default function PostFeed({
 
   return (
     <div className="flex flex-col gap-4 ">
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-start">
         <AnimatedTabs
-          tabs={['trending', 'new']}
+          tabs={['hot', 'fresh']}
           activeTab={selected}
-          onTabChange={(tab) => setSelected(tab as 'new' | 'trending')}
+          onTabChange={(tab) => setSelected(tab as 'fresh' | 'hot')}
         />
       </div>
-      {selected === 'new' ? (
+      {selected === 'fresh' ? (
         isNewLoading ? (
           <SkeletonPosts />
         ) : newPosts?.length && newPosts?.length > 0 ? (
@@ -73,14 +73,16 @@ function SkeletonPosts() {
 
 function SkeletonPost() {
   return (
-    <div className="relative [overflow-wrap:anywhere] bg-[#111111] rounded-xl overflow-hidden">
-      <div className="flex flex-col gap-4 border p-4 sm:p-6 rounded-xl">
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-[250px]" />
-          <Skeleton className="h-4 w-[200px]" />
-        </div>
+    <div className="gradient-border-wrapper rounded-2xl bg-zinc-950/90">
+      <div className="relative [overflow-wrap:anywhere] bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl overflow-hidden">
+        <div className="flex flex-col gap-4 border p-4 sm:p-6 rounded-2xl">
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
 
-        <Skeleton className="h-4 w-[100px]" />
+          <Skeleton className="h-4 w-[100px]" />
+        </div>
       </div>
     </div>
   )

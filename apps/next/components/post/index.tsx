@@ -137,12 +137,12 @@ export function Post({
           {cast.embeds.map((embed) => {
             if (embed.metadata?.image) {
               return (
-                <img key={embed.url} src={embed.url} alt="embed" className="rounded-xl" />
+                <img key={embed.url} src={embed.url} alt="embed" className="rounded-2xl" />
               )
             }
             if (embed.metadata?.html) {
               return (
-                <div key={embed.url} className="w-full border rounded-xl overflow-hidden">
+                <div key={embed.url} className="w-full border rounded-2xl overflow-hidden">
                   {embed.metadata?.html?.ogImage &&
                     embed.metadata?.html?.ogImage.length > 0 && (
                       <img
@@ -165,7 +165,7 @@ export function Post({
               return (
                 <div
                   key={embed.cast.hash}
-                  className="flex flex-row gap-4 border border-zinc-700 p-4 rounded-xl"
+                  className="flex flex-row gap-4 border border-zinc-700 p-4 rounded-2xl"
                 >
                   <img
                     src={embed.cast.author?.pfp_url}
