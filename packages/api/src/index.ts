@@ -18,6 +18,9 @@ import { getProvingBackend, ProofType } from "@anon/utils/src/proofs";
     .use(merkleTreeRoutes)
     .use(postRoutes)
     .use(uploadRoutes)
+    .get("/health", () => {
+      return "OK";
+    })
     .get(
       "/get-cast",
       async ({ query }) => {
