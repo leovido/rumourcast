@@ -18,29 +18,6 @@ import { getProvingBackend, ProofType } from "@anon/utils/src/proofs";
     .use(merkleTreeRoutes)
     .use(postRoutes)
     .use(uploadRoutes)
-    .onRequest((context) => {
-      // Set CORS headers for all requests
-      context.set.headers["Access-Control-Allow-Origin"] =
-        "https://rumourcast.xyz";
-      context.set.headers["Access-Control-Allow-Methods"] =
-        "GET, POST, OPTIONS";
-      context.set.headers["Access-Control-Allow-Headers"] =
-        "Content-Type, Authorization";
-      context.set.headers["Access-Control-Allow-Credentials"] = "true";
-    })
-    .options("*", () => {
-      // Handle OPTIONS preflight requests
-      return new Response(null, {
-        status: 204,
-        headers: {
-          "Access-Control-Allow-Origin": "https://rumourcast.xyz",
-          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization",
-          "Access-Control-Allow-Credentials": "true",
-          "Access-Control-Max-Age": "86400", // 24 hours
-        },
-      });
-    })
     .get("/health", () => {
       return "OK";
     })
