@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'> & { text?: string }>(
+const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'> & { text?: string, defaultValue: string }>(
   ({ className, defaultValue = "Your fixed text here\n", text = "", onChange, ...props }, ref) => {
     const [additionalContent, setAdditionalContent] = React.useState(text)
     
