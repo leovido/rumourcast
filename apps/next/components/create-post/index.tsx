@@ -24,6 +24,7 @@ import { Checkbox } from '../ui/checkbox'
 const MAX_EMBEDS = 2
 
 export function CreatePost() {
+  const [isUploadImageAvailable] = useState(false)
   const {
     text,
     setText,
@@ -62,14 +63,16 @@ export function CreatePost() {
     }
   }
 
+  
+
   return (
     <div className="flex flex-col gap-4">
       <RemoveableParent />
       <Textarea
-        value={text ?? ''}
+        defaultValue="I heard a rumour... "
+        text={text ?? ''}
         onChange={handleSetText}
         className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950 border border-zinc-700"
-        placeholder="Spill some rumours, anon"
       />
       <RevealPhrase />
       <RemoveableImage />
@@ -77,7 +80,7 @@ export function CreatePost() {
       <RemoveableQuote />
       <div className="flex flex-col sm:flex-row justify-between gap-4 xs:gap-0">
         <div className="flex gap-4">
-          <UploadImage />
+          {isUploadImageAvailable && <UploadImage />}
           <EmbedLink />
           <ParentCast />
           <QuoteCast />
@@ -101,7 +104,7 @@ export function CreatePost() {
                 <p>Awaiting signature</p>
               </div>
             ) : (
-              'Post anonymously'
+              'Cast rumour 👀'
             )}
           </Button>
         </div>

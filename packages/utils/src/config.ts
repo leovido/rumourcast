@@ -1,4 +1,4 @@
-export const ANON_ADDRESS = "0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8";
+export const ANON_ADDRESS = "0x1ceccbe4d3a19cb62dbbd09756a52cfe5394fab8";
 export const COMMENT_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export const TOKEN_CONFIG: Record<
@@ -14,9 +14,9 @@ export const TOKEN_CONFIG: Record<
 > = {
   [ANON_ADDRESS]: {
     ticker: "RUMOUR",
-    postAmount: "5000000000000000000000",
+    postAmount: "10000000000000000000000000",
     promoteAmount: "2000000000000000000000000",
-    deleteAmount: "2000000000000000000000000",
+    deleteAmount: "100000000000000000000000000",
     farcasterUsername: "rumourcast",
     fid: 884230,
   },
