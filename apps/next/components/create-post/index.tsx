@@ -36,7 +36,6 @@ export function CreatePost() {
     setConfetti,
   } = useCreatePost()
 
-  console.warn(text, 'here')
   const length = new Blob([text ?? '']).size
 
   const handleSetText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

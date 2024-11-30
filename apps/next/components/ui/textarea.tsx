@@ -4,21 +4,21 @@ import { cn } from '@/lib/utils'
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'> & { text?: string, defaultValue: string }>(
   ({ className, defaultValue = "Your fixed text here\n", text = "", onChange, ...props }, ref) => {
-    const [additionalContent, setAdditionalContent] = React.useState(text)
-    
-    React.useEffect(() => {
-      setAdditionalContent(text)
-    }, [text])
-
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = e.target.value
       if (!newValue.startsWith(defaultValue)) {
-        setAdditionalContent('')
+        const newEvent = {
+          ...e,
+          target: {
+            ...e.target,
+            value: ''
+          }
+        }
+        onChange?.(newEvent as React.ChangeEvent<HTMLTextAreaElement>)
         return
       }
-      const newContent = newValue.slice(defaultValue.length)
-      setAdditionalContent(newContent)
       
+      const newContent = newValue.slice(defaultValue.length)
       const newEvent = {
         ...e,
         target: {
@@ -49,7 +49,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'tex
           'flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
           className
         )}
-        value={defaultValue + additionalContent}
+        value={defaultValue + text}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         ref={ref}
