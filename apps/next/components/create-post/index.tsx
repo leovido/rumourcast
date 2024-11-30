@@ -36,6 +36,7 @@ export function CreatePost() {
     setConfetti,
   } = useCreatePost()
 
+  console.warn(text, 'here')
   const length = new Blob([text ?? '']).size
 
   const handleSetText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -68,7 +69,7 @@ export function CreatePost() {
       <RemoveableParent />
       <Textarea
         defaultValue="I heard a rumour that... "
-        value={'I heard a rumour that... '}
+        text={text ?? ''}
         onChange={handleSetText}
         className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950 border border-zinc-700"
       />

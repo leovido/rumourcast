@@ -2,27 +2,44 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'>>(
-  ({ className, value = "Your fixed text here\n", onChange, ...props }, ref) => {
-    const [additionalContent, setAdditionalContent] = React.useState('')
+const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'> & { text?: string }>(
+  ({ className, defaultValue = "Your fixed text here\n", text = "", onChange, ...props }, ref) => {
+    const [additionalContent, setAdditionalContent] = React.useState(text)
     
+    React.useEffect(() => {
+      setAdditionalContent(text)
+    }, [text])
+
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = e.target.value
-      if (!newValue.startsWith(value)) {
-        e.target.value = value + additionalContent
+      if (!newValue.startsWith(defaultValue)) {
+        setAdditionalContent('')
         return
       }
-      setAdditionalContent(newValue.slice(value.length))
-      onChange?.(e)
+      const newContent = newValue.slice(defaultValue.length)
+      setAdditionalContent(newContent)
+      
+      const newEvent = {
+        ...e,
+        target: {
+          ...e.target,
+          value: newContent
+        }
+      }
+      onChange?.(newEvent as React.ChangeEvent<HTMLTextAreaElement>)
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
       const target = e.target as HTMLTextAreaElement
       const selectionStart = target.selectionStart
       
-      if (selectionStart! <= value.length && 
-          (e.key === 'Backspace' || e.key === 'Delete')) {
+      if (selectionStart! <= defaultValue.length && 
+          (e.key === 'Backspace' || e.key === 'Delete' || 
+           e.key === 'ArrowLeft' || e.key === 'Home')) {
         e.preventDefault()
+        if (e.key === 'Home') {
+          target.setSelectionRange(defaultValue.length, defaultValue.length)
+        }
       }
     }
 
@@ -32,7 +49,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'tex
           'flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
           className
         )}
-        value={value + additionalContent}
+        value={defaultValue + additionalContent}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         ref={ref}
