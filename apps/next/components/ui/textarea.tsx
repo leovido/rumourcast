@@ -3,10 +3,7 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'> & { text?: string, defaultValue: string }>(
-  ({ className, defaultValue = "", text = "", onChange, ...props }, ref) => {
-    console.log('Current text:', text)
-    console.log('Default value:', defaultValue)
-    
+  ({ className, defaultValue = "", text = "", onChange, ...props }, ref) => {    
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = e.target.value
       
@@ -30,7 +27,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'tex
           value: newContent
         }
       }
-      console.log('Sending to parent:', newEvent.target.value)
       onChange?.(newEvent as React.ChangeEvent<HTMLTextAreaElement>)
     }
 

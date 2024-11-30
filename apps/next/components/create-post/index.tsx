@@ -69,7 +69,8 @@ export function CreatePost() {
     <div className="flex flex-col gap-4">
       <RemoveableParent />
       <Textarea
-        text={text ?? 'I heard a rumour that... '}
+        defaultValue="I heard a rumour that... "
+        text={text ?? ''}
         onChange={handleSetText}
         className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950 border border-zinc-700"
       />
