@@ -14,9 +14,9 @@ export const TOKEN_CONFIG: Record<
 > = {
   [ANON_ADDRESS]: {
     ticker: "RUMOUR",
-    postAmount: "5000000000000000000000",
+    postAmount: "10000000000000000000000000",
     promoteAmount: "2000000000000000000000000",
-    deleteAmount: "2000000000000000000000000",
+    deleteAmount: "100000000000000000000000000",
     farcasterUsername: "rumourcast",
     fid: 884230,
   },
