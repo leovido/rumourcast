@@ -3,15 +3,19 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'> & { text?: string, defaultValue: string }>(
-  ({ className, defaultValue = "Your fixed text here\n", text = "", onChange, ...props }, ref) => {
+  ({ className, defaultValue = "", text = "", onChange, ...props }, ref) => {
+    console.log('Current text:', text)
+    console.log('Default value:', defaultValue)
+    
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = e.target.value
+      
       if (!newValue.startsWith(defaultValue)) {
         const newEvent = {
           ...e,
           target: {
             ...e.target,
-            value: ''
+            value: defaultValue
           }
         }
         onChange?.(newEvent as React.ChangeEvent<HTMLTextAreaElement>)
@@ -26,6 +30,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'tex
           value: newContent
         }
       }
+      console.log('Sending to parent:', newEvent.target.value)
       onChange?.(newEvent as React.ChangeEvent<HTMLTextAreaElement>)
     }
 
@@ -49,7 +54,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'tex
           'flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
           className
         )}
-        value={defaultValue + text}
+        value={defaultValue + (text || '')}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         ref={ref}
