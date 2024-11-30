@@ -38,7 +38,7 @@ export function CreatePost() {
   const length = new Blob([text ?? '']).size
 
   const handleSetText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (new Blob([e.target.value]).size > 320) return
+    if (new Blob([e.target.value]).size > 300) return
     setText(e.target.value)
 
     // Check for Warpcast URLs
@@ -68,7 +68,7 @@ export function CreatePost() {
       <Textarea
         value={text ?? ''}
         onChange={handleSetText}
-        className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950 border border-zinc-700"
+        className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950/50 border border-zinc-900/20"
         placeholder="Spill some rumours, anon"
       />
       <RevealPhrase />
@@ -76,7 +76,7 @@ export function CreatePost() {
       <RemoveableEmbed />
       <RemoveableQuote />
       <div className="flex flex-col sm:flex-row justify-between gap-4 xs:gap-0">
-        <div className="flex gap-4">
+        <div className="flex gap-2">
           <UploadImage />
           <EmbedLink />
           <ParentCast />
@@ -84,10 +84,10 @@ export function CreatePost() {
           <Channel />
         </div>
         <div className="flex flex-row items-center gap-4 sm: justify-between">
-          <p className="font-medium text-zinc-400">{`${length} / 320`}</p>
+          <p className="font-medium text-zinc-400">{`${length} / 300`}</p>
           <Button
             onClick={createPost}
-            className="font-bold text-md rounded-md hover:scale-105 transition-all duration-300"
+            className="font-bold text-base rounded-full hover:scale-105 transition-all duration-300 py-6"
             disabled={!['idle', 'success', 'error'].includes(state.status)}
           >
             {state.status === 'generating' ? (
@@ -101,7 +101,10 @@ export function CreatePost() {
                 <p>Awaiting signature</p>
               </div>
             ) : (
-              'Post anonymously'
+              <div className="flex flex-row items-center gap-1">
+                <span className="mb-0.5">👀</span>
+                Cast rumour
+              </div>
             )}
           </Button>
         </div>
@@ -232,7 +235,7 @@ function UploadImage() {
         tooltip="Upload image"
         onClick={() => fileInputRef.current?.click()}
         disabled={loading || !!image || embedCount >= MAX_EMBEDS}
-        className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+        className="w-full sm:w-auto min-w-10 bg-zinc-950/50 border border-zinc-800/80 sm:rounded-full sm:min-h-10"
       >
         <input
           ref={fileInputRef}
@@ -247,7 +250,7 @@ function UploadImage() {
       </TooltipButton>
 
       {error && (
-        <div className="absolute top-12 left-0 z-10 bg-red-100 text-red-700 px-3 py-2 rounded-md text-sm">
+        <div className="absolute top-12 left-0 z-10 bg-red-100 text-red-700 px-3 py-2 rounded-lg text-sm">
           {error}
         </div>
       )}
@@ -291,7 +294,7 @@ function EmbedLink() {
         <TooltipButton
           tooltip="Embed link"
           disabled={!!embed || embedCount >= MAX_EMBEDS}
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950/50 border border-zinc-800/80 rounded-full w-10 h-10"
         >
           <Link />
         </TooltipButton>
@@ -344,7 +347,7 @@ function RemoveableEmbed() {
   return (
     <div className="relative">
       <div
-        className="w-full border rounded-xl overflow-hidden cursor-pointer"
+        className="w-full border border-secondary rounded-2xl overflow-hidden cursor-pointer"
         onClick={() => window.open(embed, '_blank')}
       >
         {image && (
@@ -363,7 +366,7 @@ function RemoveableEmbed() {
         variant="outline"
         size="icon"
         onClick={() => setEmbed(null)}
-        className="absolute top-1 right-1"
+        className="absolute top-1 right-1 bg-secondary"
       >
         <X />
       </Button>
@@ -393,7 +396,7 @@ function ParentCast() {
         <TooltipButton
           tooltip="Reply to post"
           disabled={!!parent}
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950/50 border border-zinc-800/80 rounded-full w-10 h-10"
         >
           <Reply />
         </TooltipButton>
@@ -430,7 +433,7 @@ function RemoveableParent() {
   return (
     <div className="relative">
       <div
-        className="w-full border rounded-xl p-2 overflow-hidden cursor-pointer flex flex-col gap-2"
+        className="w-full border rounded-2xl p-2 overflow-hidden cursor-pointer flex flex-col gap-2"
         onClick={() =>
           window.open(
             `https://warpcast.com/${parent.author.username}/${parent.hash}`,
@@ -501,7 +504,7 @@ function Channel() {
       <DialogTrigger asChild>
         <TooltipButton
           tooltip="Channel"
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950/50 border border-zinc-800/80 rounded-full w-10 h-10"
         >
           {channel ? (
             <img
@@ -564,7 +567,7 @@ function QuoteCast() {
         <TooltipButton
           tooltip="Quote post"
           disabled={!!quote || embedCount >= MAX_EMBEDS}
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950/50 border border-zinc-800/80 rounded-full w-10 h-10"
         >
           <Quote />
         </TooltipButton>
@@ -601,7 +604,7 @@ function RemoveableQuote() {
   return (
     <div className="relative">
       <div
-        className="w-full border rounded-xl p-2 overflow-hidden cursor-pointer flex flex-col gap-2"
+        className="w-full border rounded-2xl p-2 overflow-hidden cursor-pointer flex flex-col gap-2"
         onClick={() =>
           window.open(
             `https://warpcast.com/${quote.author.username}/${quote.hash}`,
@@ -661,7 +664,7 @@ function RevealPhrase() {
             value={revealPhrase ?? ''}
             onChange={(e) => setRevealPhrase(e.target.value)}
             placeholder="a phrase that's hard to guess"
-            className="bg-[#0D0D0D]"
+            className="bg-background/50"
           />
         </div>
       )}
