@@ -69,7 +69,7 @@ export function CreatePost() {
     <div className="flex flex-col gap-4">
       <RemoveableParent />
       <Textarea
-        defaultValue="I heard a rumour that... "
+        defaultValue="I heard a rumour... "
         text={text ?? ''}
         onChange={handleSetText}
         className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950 border border-zinc-700"
@@ -104,7 +104,7 @@ export function CreatePost() {
                 <p>Awaiting signature</p>
               </div>
             ) : (
-              'Post anonymously'
+              'Cast rumour 👀'
             )}
           </Button>
         </div>
