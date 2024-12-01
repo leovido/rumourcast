@@ -47,14 +47,14 @@ export default function PostFeed({
         ) : newPosts?.length && newPosts?.length > 0 ? (
           <Posts casts={newPosts} tokenAddress={tokenAddress} />
         ) : (
-          <h1>Something went wrong. Please reFresh rumours the page.</h1>
+          <h1>Something went wrong. Please refresh rumours the page.</h1>
         )
       ) : isTrendingLoading ? (
         <SkeletonPosts />
       ) : trendingPosts?.length && trendingPosts?.length > 0 ? (
         <Posts casts={trendingPosts} tokenAddress={tokenAddress} />
       ) : (
-        <h1>Something went wrong. Please reFresh rumours the page.</h1>
+        <h1>Something went wrong. Please refresh rumours the page.</h1>
       )}
     </div>
   )
@@ -96,7 +96,7 @@ function Posts({
   tokenAddress: string
 }) {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl bg-zinc-950/90">
+    <div className="flex flex-col gap-4 rounded-2xl">
       {casts?.map((cast) => (
         <Link href={`/posts/${cast.hash}`} key={cast.hash}>
           <Post cast={cast} tokenAddress={tokenAddress} />

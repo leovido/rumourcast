@@ -4,6 +4,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  @apply bg-fixed bg-gradient-to-b from-[#191919] via-[#1b1a1b] to-[#2c1c35] text-foreground;
 }
 
 @layer utilities {
@@ -24,7 +25,7 @@ body {
     --primary-foreground: 282 100 98%;
     --secondary: 245 58 56%;
     --secondary-foreground: 0 0% 9%;
-    --button-secondary: 0, 2%, 10%; 
+    --button-secondary: 0, 2%, 10%;
     --button-secondary-foreground: 0 0% 100%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
@@ -81,8 +82,15 @@ body {
   }
   .gradient-border-wrapper {
     padding: 1px;
-    background-image: linear-gradient(hsl(var(--background)), hsl(var(--background))), 
-                      linear-gradient(to bottom right, hsl(var(--primary)), hsl(var(--secondary)));
+    background-image: linear-gradient(
+        hsl(var(--background)),
+        hsl(var(--background))
+      ),
+      linear-gradient(
+        to bottom right,
+        hsl(var(--primary)),
+        hsl(var(--secondary))
+      );
     background-origin: border-box;
     background-clip: content-box, border-box;
   }

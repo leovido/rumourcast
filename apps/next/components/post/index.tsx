@@ -86,7 +86,7 @@ export function Post({
   const sanitizedText = cleanText(cast.text)
 
   return (
-    <div className="relative [overflow-wrap:anywhere] bg-zinc-900 border border-zinc-700 rounded-lg overflow-hidden">
+    <div className="relative [overflow-wrap:anywhere] border-[#C848FF] rounded-2xl overflow-hidden">
       <div className="flex flex-row gap-4  p-4 sm:p-6  ">
         <div className="flex flex-col gap-2 w-full">
           <div className="flex flex-col gap-4 sm:flex-row justify-between">
@@ -121,19 +121,15 @@ export function Post({
               >
                 <img src="/farcaster.svg" alt="Warpcast" className="w-4 h-4 invert" />
               </a>
-              {cast.tweetId && (
-                <a
-                  href={`https://x.com/i/status/${cast.tweetId}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img src="/x.svg" alt="Warpcast" className="w-4 h-4 invert" />
-                </a>
-              )}
             </div>
           </div>
           {reveal?.revealedAt && <RevealBadge reveal={reveal} />}
-          <div className="font-medium whitespace-pre-wrap">{sanitizedText}</div>
+          <div className="font-normal whitespace-pre-wrap text-[#C848FF]">
+            I heard a rumour...
+          </div>
+          <div className="font-semibold whitespace-pre-wrap">
+            {sanitizedText.replace(/^I heard a rumour.*?\.{2,}(\s|$)/, '')}
+          </div>
           {cast.embeds.map((embed) => {
             if (embed.metadata?.image) {
               return (
@@ -192,17 +188,17 @@ export function Post({
           <div className="flex flex-col gap-4 sm:flex-row justify-between">
             <div className="flex flex-row items-center gap-2 mt-2">
               <div className="flex flex-row items-center gap-1.5 ">
-                <MessageSquare size={16} className="text-zinc-400" />
+                <MessageSquare size={18} className="text-zinc-400" />
                 <p className="text-sm font-medium">{formatNumber(cast.replies.count)}</p>
               </div>
               <div className="flex flex-row items-center gap-1.5 ">
-                <RefreshCcw size={16} className="text-zinc-400" />
+                <RefreshCcw size={18} className="text-zinc-400" />
                 <p className="text-sm font-medium ">
                   {formatNumber(cast.reactions.recasts_count)}
                 </p>
               </div>
               <div className="flex flex-row items-center gap-1.5 w-16">
-                <Heart size={16} className="text-zinc-400" />
+                <Heart size={18} className="text-zinc-400" />
                 <p className="text-sm font-medium">
                   {formatNumber(cast.reactions.likes_count)}
                 </p>
