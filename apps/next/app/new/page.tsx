@@ -10,7 +10,7 @@ export default function Home() {
     <CreatePostProvider tokenAddress={ANON_ADDRESS}>
       <div className="flex flex-col gap-8">
         <ActionComponent tokenAddress={ANON_ADDRESS} />
-        <PostFeed tokenAddress={ANON_ADDRESS} defaultTab="new" />
+        <PostFeed tokenAddress={ANON_ADDRESS} defaultTab="Fresh rumours" />
       </div>
     </CreatePostProvider>
   )
