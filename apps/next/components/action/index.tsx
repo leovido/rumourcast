@@ -21,99 +21,101 @@ export default function ActionComponent({
   const DELETE_POST = BigInt(TOKEN_CONFIG[ANON_ADDRESS].deleteAmount) / BigInt(10 ** 18)
 
   return (
-    <Alert className="flex flex-col gap-4 bg-zinc-900 border border-zinc-700">
-      <AlertTitle className="font-semibold text-xl">
-        Post anonymously to Farcaster
-      </AlertTitle>
-      <AlertDescription>
-        <p className="text-zinc-400">
-          Posts are made anonymous using zk proofs. Due to the complex calculations
-          required, it could take up to a few minutes. Do not post porn, doxes, shills, or
-          threats. This is not about censorship resistance - it&apos;s about great
-          anonymous posts.
-        </p>
-        <br />
-        <p className="text-zinc-400 ">Holder requirements:</p>
-        <ul className="flex flex-col gap-1 mt-3">
-          <TokenRequirement
-            tokenAmount={data}
-            tokenNeeded={FARCASTER_POST}
-            string="Post on Farcaster"
-            isConnected={!!address && !isLoading}
-          />
-          <TokenRequirement
-            tokenAmount={data}
-            tokenNeeded={DELETE_POST}
-            string="Delete posts"
-            isConnected={!!address && !isLoading}
-          />
-        </ul>
-      </AlertDescription>
-      <div className="flex flex-row gap-2 justify-between ">
-        <div className="flex flex-row gap-4">
-
-          <a
-            href="https://warpcast.com/rumour"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm decoration-dotted underline font-medium"
-          >
-            <span className="hidden sm:inline">Farcaster</span>
-            <img
-              src="/farcaster.svg"
-              alt="Farcaster"
-              className="w-4 h-4 sm:hidden invert"
+    <div className="rounded-2xl">
+      <Alert className="flex flex-col px-6 py-8 gap-4 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-2xl border-none shadow-lg shadow-black-500/50">
+        <AlertTitle className="font-semibold text-3xl">
+          Hear a rumour?<br /> Spread a rumour.
+        </AlertTitle>
+        <AlertDescription>
+          <p className="text-zinc-200">
+            Rumours are made anonymous using zk proofs. Due to the complex calculations
+            required, it could take up to a few minutes for your rumour to be posted.
+            Do not post porn, doxes, shills, or
+            threats. This is for sharing rumours - not enabling bad behaviour.
+          </p>
+          <br />
+          <p className="text-zinc-200 ">Rumour posting requirements:</p>
+          <ul className="flex flex-col gap-1 mt-3">
+            <TokenRequirement
+              tokenAmount={data}
+              tokenNeeded={FARCASTER_POST}
+              string="Post to Farcaster"
+              isConnected={!!address && !isLoading}
             />
-          </a>
-        </div>
+            <TokenRequirement
+              tokenAmount={data}
+              tokenNeeded={DELETE_POST}
+              string="Delete rumours"
+              isConnected={!!address && !isLoading}
+            />
+          </ul>
+        </AlertDescription>
+        <div className="flex flex-row gap-2 justify-between ">
+          <div className="flex flex-row gap-4">
 
-        <div className="flex flex-row gap-4 justify-end">
-          <a
-            href="https://dexscreener.com/base/0xe43e9d214a4bcb01c2fade45359bea37e74f314e"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm decoration-dotted underline font-medium"
-          >
-            DEX Screener
-          </a>
-          <a
-            href="https://app.uniswap.org/swap?outputCurrency=0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8&chain=base"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm decoration-dotted underline font-medium"
-          >
-            Uniswap
-          </a>
-          <a
-            href="https://github.com/leovido/rumourcast"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm decoration-dotted underline font-medium"
-          >
-            Github
-          </a>
+            <a
+              href="https://warpcast.com/rumour"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+            >
+              <span className="hidden sm:inline">Farcaster</span>
+              <img
+                src="/farcaster.svg"
+                alt="Farcaster"
+                className="w-4 h-4 sm:hidden invert"
+              />
+            </a>
+          </div>
+
+          <div className="flex flex-row gap-4 justify-end">
+            <a
+              href="https://dexscreener.com/base/0xe43e9d214a4bcb01c2fade45359bea37e74f314e"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+            >
+              DEX Screener
+            </a>
+            <a
+              href="https://app.uniswap.org/swap?outputCurrency=0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8&chain=base"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+            >
+              Uniswap
+            </a>
+            <a
+              href="https://github.com/leovido/rumourcast"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+            >
+              Github
+            </a>
+          </div>
         </div>
-      </div>
-      {address && !isLoading ? (
-        FARCASTER_POST > BALANCE ? (
-          <a
-            href={`https://app.uniswap.org/swap?outputCurrency=${tokenAddress}&chain=base`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded flex flex-row items-center justify-between gap-2">
-              <p className="font-bold">{`Not enough tokens to post. Buy ${
-                FARCASTER_POST - BALANCE
-              } more.`}</p>
-            </div>
-          </a>
+        {address && !isLoading ? (
+          FARCASTER_POST > BALANCE ? (
+            <a
+              href={`https://app.uniswap.org/swap?outputCurrency=${tokenAddress}&chain=base`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded flex flex-row items-center justify-between gap-2">
+                <p className="font-bold">{`Not enough tokens to post. Buy ${
+                  FARCASTER_POST - BALANCE
+                } more.`}</p>
+              </div>
+            </a>
+          ) : (
+            <CreatePost />
+          )
         ) : (
-          <CreatePost />
-        )
-      ) : (
-        <></>
-      )}
-    </Alert>
+          <></>
+        )}
+      </Alert>
+    </div>
   )
 }
 

@@ -40,7 +40,7 @@ export const ConnectButton = () => {
                 return (
                   <Button
                     onClick={openConnectModal}
-                    className="font-bold text-md rounded-md hover:scale-105 transition-all duration-300"
+                    className="font-bold text-md rounded-full hover:scale-105 transition-all duration-300"
                   >
                     Connect
                   </Button>
@@ -50,7 +50,7 @@ export const ConnectButton = () => {
                 return (
                   <Button
                     onClick={openChainModal}
-                    className="font-bold text-md rounded-md hover:scale-105 transition-all duration-300 "
+                    className="font-bold text-md rounded-full hover:scale-105 transition-all duration-300 gradient-border-wrapper"
                   >
                     Switch Network
                   </Button>
@@ -60,10 +60,10 @@ export const ConnectButton = () => {
                 <button
                   type="button"
                   onClick={openAccountModal}
-                  className="flex flex-row rounded-md overflow-hidden bg-white items-center hover:scale-105 transition-all duration-300"
+                  className="flex flex-row rounded-full overflow-hidden items-center hover:scale-105 transition-all duration-300 gradient-border-wrapper"
                 >
                   <Balance />
-                  <div className="text-md font-bold bg-gray-200 text-black rounded-md py-1.5 px-3 m-0.5">
+                  <div className="text-md font-bold text-primary rounded-md py-1.5 px-3 m-0.5">
                     {account.displayName}
                   </div>
                 </button>
@@ -82,7 +82,7 @@ function Balance() {
   const amount = parseFloat(formatEther(data ?? BigInt(0)))
 
   return (
-    <div className="text-md font-bold bg-white text-black pl-3 pr-2">
+    <div className="text-md font-bold text-white pl-3 pr-2">
       {`${formatNumber(amount)} RUMOUR`}
     </div>
   )

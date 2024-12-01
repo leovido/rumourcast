@@ -7,11 +7,11 @@ import { ConnectButton } from '@/components/connect-button'
 import { Logo } from '@/components/logo'
 
 export const metadata: Metadata = {
-  title: 'rumourcast',
-  description: 'Post anonymously to Farcaster.',
+  title: 'Rumourcast',
+  description: 'Spread rumours anonymously to Farcaster.',
   openGraph: {
-    title: 'rumourcast',
-    description: 'Post anonymously to Farcaster.',
+    title: 'Rumourcast',
+    description: 'Spread rumours anonymously to Farcaster.',
     images: ['/rumour.webp'],
   },
 }
@@ -25,8 +25,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${GeistSans.className} antialiased min-h-screen w-full`}>
         <Providers>
-          <div className="flex h-screen flex-col p-4 xl:p-8 max-w-screen-sm mx-auto gap-8">
-            <div className="flex items-center justify-between xl:absolute xl:top-0 xl:left-0 xl:right-0 xl:p-8 xl:max-w-screen-xl xl:mx-auto">
+        <div className="flex h-screen flex-col p-4 xl:p-8 xl:pt-16 max-w-screen-sm mx-auto gap-8 ">
+        <div className="flex items-center justify-between xl:absolute xl:top-0 xl:left-0 xl:right-0 xl:p-8 xl:pt-16 xl:max-w-screen-xl xl:mx-auto">
               <Logo />
               <ConnectButton />
             </div>
