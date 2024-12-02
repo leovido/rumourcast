@@ -11,8 +11,8 @@ import { ANON_ADDRESS } from '@anon/utils/src/config'
 import { CreatePostProvider } from './create-post/context'
 
 const config = getDefaultConfig({
-  appName: 'My RainbowKit App',
-  projectId: process.env.WALLET_CONNECT_PROJECT_ID || '',
+  appName: 'RumourCast App',
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
   chains: [base],
   ssr: true,
 })
