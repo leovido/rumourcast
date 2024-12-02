@@ -12,7 +12,7 @@ import { CreatePostProvider } from './create-post/context'
 
 const config = getDefaultConfig({
   appName: 'My RainbowKit App',
-  projectId: '302e299e8d6c292b6aeb9f313321e134',
+  projectId: process.env.WALLET_CONNECT_PROJECT_ID || '',
   chains: [base],
   ssr: true,
 })
