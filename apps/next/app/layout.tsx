@@ -23,10 +23,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* PWA Meta Tags */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="icon" href="/favicon.ico" />
+        {/* Add other custom meta tags if needed */}
+      </head>
       <body className={`${GeistSans.className} antialiased min-h-screen w-full`}>
         <Providers>
-        <div className="flex h-screen flex-col p-4 xl:p-8 xl:pt-16 max-w-screen-sm mx-auto gap-8 ">
-        <div className="flex items-center justify-between xl:absolute xl:top-0 xl:left-0 xl:right-0 xl:p-8 xl:pt-16 xl:max-w-screen-xl xl:mx-auto">
+          <div className="flex h-screen flex-col p-4 xl:p-8 xl:pt-16 max-w-screen-sm mx-auto gap-8">
+            <div className="flex items-center justify-between xl:absolute xl:top-0 xl:left-0 xl:right-0 xl:p-8 xl:pt-16 xl:max-w-screen-xl xl:mx-auto">
               <Logo />
               <ConnectButton />
             </div>
