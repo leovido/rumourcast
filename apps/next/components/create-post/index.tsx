@@ -4,7 +4,7 @@ import { Textarea } from '../ui/textarea'
 import { useCreatePost } from './context'
 import { Image, Link, Loader2, Quote, Reply, SquareSlash, X } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
-import { type ReactNode, useEffect, useRef, useState } from 'react'
+import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -469,20 +469,19 @@ function RemoveableParent() {
 function Channel() {
   const { setChannel, channel } = useCreatePost()
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState(channel?.id ?? '')
+  const [value, setValue] = useState(channel?.id ?? 'rumours')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleSetChannel = async () => {
+  const handleSetChannel = useCallback(async () => {
     if (!value) {
-      // clearing the channel
       setChannel(null)
       setOpen(false)
       return
     }
 
     setLoading(true)
-    setError(null) // Clear any previous error
+    setError(null)
     try {
       const data = await api.getChannel(value.replace('/', ''))
       if (!data) {
@@ -497,7 +496,18 @@ function Channel() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [value, setChannel])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(async () => {
+      if (value !== channel?.id) {
+        await handleSetChannel()
+      }
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
