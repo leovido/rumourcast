@@ -24,14 +24,13 @@ export default function ActionComponent({
     <div className="rounded-2xl">
       <Alert className="flex flex-col px-6 py-8 gap-4 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-2xl border-none shadow-lg shadow-black-500/50">
         <AlertTitle className="font-semibold text-3xl">
-          Hear a rumour?<br /> Spread a rumour.
+          Heard a rumour? 👀<br /> Share it!
         </AlertTitle>
         <AlertDescription>
           <p className="text-zinc-200">
             Rumours are made anonymous using zk proofs. Due to the complex calculations
             required, it could take up to a few minutes for your rumour to be posted.
-            Do not post porn, doxes, shills, or
-            threats. This is for sharing rumours - not enabling bad behaviour.
+            Do not post porn, doxes, shills, or threats. This is for sharing rumours - not enabling bad behaviour.
           </p>
           <br />
           <p className="text-zinc-200 ">Rumour posting requirements:</p>
@@ -73,15 +72,15 @@ export default function ActionComponent({
               href="https://dexscreener.com/base/0xe43e9d214a4bcb01c2fade45359bea37e74f314e"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+              className="text-sm button-secondary px-4 py-2 rounded-full font-medium"
             >
-              DEX Screener
+              DEX
             </a>
             <a
               href="https://app.uniswap.org/swap?outputCurrency=0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8&chain=base"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+              className="text-sm button-secondary px-4 py-2 rounded-full font-medium"
             >
               Uniswap
             </a>
@@ -89,7 +88,7 @@ export default function ActionComponent({
               href="https://github.com/leovido/rumourcast"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
+              className="text-sm button-secondary px-4 py-2 rounded-full font-medium"
             >
               Github
             </a>
