@@ -12,7 +12,7 @@ import { CreatePostProvider } from './create-post/context'
 
 const config = getDefaultConfig({
   appName: 'RumourCast App',
-  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || 'c615d5a18982cf9eb69f78706b187884',
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
   chains: [base],
   ssr: true,
 })
