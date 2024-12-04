@@ -13,6 +13,13 @@ TwitterApiV2Settings.debug = true;
 
 const redis = new Redis(process.env.REDIS_URL as string);
 
+export const twitterClient = new TwitterApi({
+  appKey: process.env.TWITTER_API_KEY as string,
+  appSecret: process.env.TWITTER_API_SECRET as string,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN as string,
+  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET as string,
+});
+
 export async function promoteToTwitter(
   cast: Cast,
   parentTweetId?: string,
@@ -102,6 +109,11 @@ async function formatAndSubmitToTwitter(
           reject(e);
         });
     });
+    mediaIds.push(
+      await twitterClient.v1.uploadMedia(binaryData as unknown as Buffer, {
+        mimeType,
+      })
+    );
   }
 
   const params: SendTweetV2Params = {};
@@ -142,5 +154,24 @@ async function formatAndSubmitToTwitter(
         continue;
       }
     }
+  }
+
+  try {
+    const result = await twitterClient.v2.tweet(text, params);
+    if (result?.data?.id) {
+      return result.data.id;
+    }
+  } catch (e) {
+    if (e instanceof ApiResponseError) {
+      if (e.rateLimit) {
+        await redis.set(
+          "twitter:rate-limit",
+          e.rateLimit.reset,
+          "EXAT",
+          e.rateLimit.reset
+        );
+      }
+    }
+    throw e;
   }
 }

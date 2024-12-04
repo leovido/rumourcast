@@ -19,6 +19,7 @@ import { useCreatePost } from '../create-post/context'
 import { useAccount, useSignMessage } from 'wagmi'
 import { useBalance } from '@/hooks/use-balance'
 import { TOKEN_CONFIG } from '@anon/utils/src/config'
+import { usePromotePost } from '@/hooks/use-promote-post'
 import { useDeletePost } from '@/hooks/use-delete-post'
 import { api } from '@/lib/api'
 import { useRouter } from 'next/navigation'
@@ -50,6 +51,12 @@ export function Post({
     address &&
     !!balance &&
     balance >= BigInt(TOKEN_CONFIG[tokenAddress].deleteAmount)
+
+  const canPromote =
+    address &&
+    !!balance &&
+    balance >= BigInt(TOKEN_CONFIG[tokenAddress].promoteAmount) &&
+    !cast.tweetId
 
   const canReveal = address && !!cast.reveal && !cast.reveal.revealedAt
 
@@ -120,6 +127,15 @@ export function Post({
               >
                 <img src="/farcaster.svg" alt="Warpcast" className="w-4 h-4 invert" />
               </a>
+              {cast.tweetId && (
+                <a
+                  href={`https://x.com/i/status/${cast.tweetId}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img src="/x.svg" alt="Warpcast" className="w-4 h-4 invert" />
+                </a>
+              )}
             </div>
           </div>
           {reveal?.revealedAt && <RevealBadge reveal={reveal} />}
@@ -231,6 +247,7 @@ export function Post({
                   tokenAddress={tokenAddress}
                 />
               )}
+              {canPromote && <PromoteButton cast={cast} tokenAddress={tokenAddress} />}
               {canDelete && <DeleteButton cast={cast} tokenAddress={tokenAddress} />}
             </div>
           </div>
@@ -310,6 +327,73 @@ function DeleteButton({ cast, tokenAddress }: { cast: Cast; tokenAddress: string
               </div>
             ) : (
               'Delete'
+            )}
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+
+function PromoteButton({ cast, tokenAddress }: { cast: Cast; tokenAddress: string }) {
+  const { toast } = useToast()
+  const { promotePost, promoteState } = usePromotePost(tokenAddress)
+  const [open, setOpen] = useState(false)
+  const [asReply, setAsReply] = useState(false)
+  const handlePromote = async () => {
+    await promotePost(cast.hash, asReply)
+    toast({
+      title: 'Post will be promoted in 1-2 minutes',
+    })
+    setOpen(false)
+  }
+  const twitterEmbed = cast.embeds?.find(
+    (e) => e.url?.includes('x.com') || e.url?.includes('twitter.com')
+  )
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogTrigger asChild>
+        <p className="text-sm underline decoration-dotted font-semibold cursor-pointer hover:text-red-400">
+          Promote
+        </p>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Promote to X/Twitter?</AlertDialogTitle>
+          <AlertDialogDescription>
+            You will need to delete the post if you want to remove it from X/Twitter.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        {twitterEmbed && (
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="as-reply"
+              checked={asReply}
+              onCheckedChange={(checked) => setAsReply(checked as boolean)}
+            />
+            <label
+              htmlFor="as-reply"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Promote as reply
+            </label>
+          </div>
+        )}
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <Button onClick={handlePromote} disabled={promoteState.status !== 'idle'}>
+            {promoteState.status === 'generating' ? (
+              <div className="flex flex-row items-center gap-2">
+                <Loader2 className="animate-spin" />
+                <p>Generating proof</p>
+              </div>
+            ) : promoteState.status === 'signature' ? (
+              <div className="flex flex-row items-center gap-2">
+                <Loader2 className="animate-spin" />
+                <p>Awaiting signature</p>
+              </div>
+            ) : (
+              'Promote'
             )}
           </Button>
         </AlertDialogFooter>

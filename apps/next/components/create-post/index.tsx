@@ -34,6 +34,8 @@ export function CreatePost() {
     setQuote,
     confetti,
     setConfetti,
+    embed,
+    setEmbed,
   } = useCreatePost()
 
   const length = new Blob([text ?? '']).size
@@ -47,6 +49,13 @@ export function CreatePost() {
     const warpcastMatches = Array.from(e.target.value.matchAll(warpcastRegex) || []).map(
       (match) => match[0]
     )
+
+    // Check for Twitter URLs
+    const twitterRegex = /https:\/\/(twitter\.com|x\.com)\/[^/]+\/status\/\d+/g
+    const twitterMatches = Array.from(e.target.value.matchAll(twitterRegex) || []).map(
+      (match) => match[0]
+    )
+
     // Try to set quote from Warpcast URLs
     if (warpcastMatches.length > 0) {
       const currentHash = quote?.hash
@@ -59,6 +68,14 @@ export function CreatePost() {
             setQuote(cast)
           }
         })
+      }
+    }
+    // Handle Twitter URLs
+    if (twitterMatches.length > 0) {
+      const currentEmbed = embed
+      const twitterUrl = twitterMatches[0]
+      if (!currentEmbed || currentEmbed !== twitterUrl) {
+        setEmbed(twitterUrl)
       }
     }
   }
@@ -586,7 +603,7 @@ function QuoteCast() {
         <DialogHeader>
           <DialogTitle>Quote post</DialogTitle>
           <DialogDescription>
-            You can quote posts from Warpcast.
+          You can quote posts from Warpcast or X/Twitter.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col  gap-4 py-4">
@@ -594,7 +611,7 @@ function QuoteCast() {
             id="quote"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="https://warpcast.com/..."
+            placeholder="https://warpcast.com/..., https://x.com/..."
           />
         </div>
         <DialogFooter>
