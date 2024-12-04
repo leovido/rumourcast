@@ -49,8 +49,7 @@ export function Post({
   const canDelete =
     address &&
     !!balance &&
-    balance >= BigInt(TOKEN_CONFIG[tokenAddress].deleteAmount) &&
-    cast.tweetId
+    balance >= BigInt(TOKEN_CONFIG[tokenAddress].deleteAmount)
 
   const canReveal = address && !!cast.reveal && !cast.reveal.revealedAt
 
