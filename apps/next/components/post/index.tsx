@@ -26,6 +26,7 @@ import { useRouter } from 'next/navigation'
 import { hashMessage } from 'viem'
 import { Input } from '../ui/input'
 import { useQuery } from '@tanstack/react-query'
+import { Checkbox } from '@radix-ui/react-checkbox'
 
 function formatNumber(num: number): string {
   if (num < 1000) return num.toString()
