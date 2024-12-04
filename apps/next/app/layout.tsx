@@ -1,10 +1,11 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { Providers } from '@/components/providers'
-import { Toaster } from '@/components/ui/toaster'
-import { GeistSans } from 'geist/font/sans'
-import { ConnectButton } from '@/components/connect-button'
-import { Logo } from '@/components/logo'
+import type { Metadata } from 'next';
+import './globals.css';
+import { Providers } from '@/components/providers';
+import { Toaster } from '@/components/ui/toaster';
+import { GeistSans } from 'geist/font/sans';
+import { ConnectButton } from '@/components/connect-button';
+import { Logo } from '@/components/logo';
+import BackToTopButton from '@/components/back-to-top-button';
 
 export const metadata: Metadata = {
   title: 'Rumourcast',
@@ -14,12 +15,12 @@ export const metadata: Metadata = {
     description: 'Spread rumours anonymously to Farcaster.',
     images: ['/rumour.webp'],
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -39,7 +40,8 @@ export default function RootLayout({
           </div>
         </Providers>
         <Toaster />
+        <BackToTopButton />
       </body>
     </html>
-  )
+  );
 }
