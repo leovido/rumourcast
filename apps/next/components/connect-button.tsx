@@ -50,7 +50,7 @@ export const ConnectButton = () => {
                 return (
                   <Button
                     onClick={openChainModal}
-                    className="font-bold text-md rounded-full hover:scale-105 transition-all duration-300 gradient-border-wrapper"
+                    className="font-bold text-md rounded-full hover:scale-105 transition-all duration-300"
                   >
                     Switch Network
                   </Button>
