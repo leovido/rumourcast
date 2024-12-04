@@ -5,7 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { GeistSans } from 'geist/font/sans';
 import { ConnectButton } from '@/components/connect-button';
 import { Logo } from '@/components/logo';
-import BackToTopButton from '@/components/back-to-top-button';
+import BackToTopButton from '@/components/ui/back-to-top-button';
 
 export const metadata: Metadata = {
   title: 'Rumourcast',
