@@ -48,31 +48,40 @@ export default function ActionComponent({
               isConnected={!!address && !isLoading}
             />
           </ul>
-        </AlertDescription>
-        <div className="flex flex-row gap-2 justify-between ">
-          <div className="flex flex-row gap-4">
+          </AlertDescription>
+          <div className="flex flex-row gap-2 justify-between ">
+  <div className="flex flex-row gap-2">
+    <a
+      href="https://x.com/Rumour_Cast"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
+    >
+      <span className="hidden">X/Twitter</span>
+      <img src="/x.svg" alt="X/Twitter" className="w-5 h-5 invert" />
+    </a>
 
-            <a
-              href="https://warpcast.com/rumour"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm button-secondary px-3 py-2 rounded-full font-medium"
-            >
-              <span className="hidden sm:inline">Farcaster</span>
-              <img
-                src="/farcaster.svg"
-                alt="Farcaster"
-                className="w-4 h-4 sm:hidden invert"
-              />
-            </a>
-          </div>
+    <a
+      href="https://warpcast.com/rumour"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
+    >
+      <span className="hidden">Farcaster</span>
+      <img
+        src="/farcaster.svg"
+        alt="Farcaster"
+        className="w-5 h-5 invert"
+      />
+    </a>
+  </div>
 
-          <div className="flex flex-row gap-4 justify-end">
+          <div className="flex flex-row gap-2 justify-end">
             <a
               href="https://dexscreener.com/base/0xe43e9d214a4bcb01c2fade45359bea37e74f314e"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm button-secondary px-4 py-2 rounded-full font-medium"
+              className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
             >
               DEX
             </a>
@@ -80,7 +89,7 @@ export default function ActionComponent({
               href="https://app.uniswap.org/swap?outputCurrency=0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8&chain=base"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm button-secondary px-4 py-2 rounded-full font-medium"
+              className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
             >
               Uniswap
             </a>
@@ -88,7 +97,7 @@ export default function ActionComponent({
               href="https://github.com/leovido/rumourcast"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm button-secondary px-4 py-2 rounded-full font-medium"
+              className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
             >
               Github
             </a>
