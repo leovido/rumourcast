@@ -533,7 +533,7 @@ function Channel() {
       className="rounded-full w-full h-full object-cover"
     />
   ) : (
-    <SquareSlash className="w-6 h-6" />
+    <SquareSlash className="w-8 h-8" />
   )}
 </TooltipButton>
       </DialogTrigger>
