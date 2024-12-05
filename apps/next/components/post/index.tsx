@@ -212,8 +212,8 @@ export function Post({
                 <p
   className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
   style={{
-    backgroundColor: 'rgba(124, 101, 193, 0.25)', // Background with 25% opacity
-    padding: '0.5rem 1rem', // Adjust padding as needed
+    backgroundColor: 'rgba(124, 101, 193, 0.25)',
+    padding: '0.5rem 1rem',
   }}
   onClick={quote}
 >
@@ -222,7 +222,11 @@ export function Post({
               )}
               {address && (
                 <p
-                  className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
+                className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
+                style={{
+                  backgroundColor: 'rgba(124, 101, 193, 0.25)',
+                  padding: '0.5rem 1rem',
+                }}
                   onClick={reply}
                 >
                   Reply
