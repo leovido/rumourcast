@@ -209,15 +209,12 @@ export function Post({
               onClick={(e) => e.preventDefault()}
             >
               {address && (
-<p
-  className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
-  style={{
-    backgroundColor: 'rgba(124, 101, 193, 0.25)', // Equivalent to 25% opacity
-  }}
-  onClick={quote}
->
-  Quote
-</p>
+                <p
+                  className="text-sm button-primary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
+                  onClick={quote}
+                >
+                  Quote
+                </p>
               )}
               {address && (
                 <p
