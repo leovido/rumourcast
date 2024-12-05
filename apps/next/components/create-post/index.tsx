@@ -530,7 +530,7 @@ function Channel() {
     <img
       src={channel.image_url}
       alt={channel.name}
-      className="rounded-full w-6 h-6 object-cover"
+      className="rounded-full w-8 h-8 object-cover"
     />
   ) : (
     <SquareSlash className="w-6 h-6" />
