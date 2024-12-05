@@ -522,20 +522,20 @@ function Channel() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <TooltipButton
-          tooltip="Channel"
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
-        >
-          {channel ? (
-            <img
-              src={channel.image_url}
-              alt={channel.name}
-              className="rounded-full w-full h-full object-contain"
-            />
-          ) : (
-            <SquareSlash />
-          )}
-        </TooltipButton>
+      <TooltipButton
+  tooltip="Channel"
+  className="w-10 h-10 sm:w-auto sm:h-auto min-w-10 bg-zinc-950 border border-zinc-700 flex items-center justify-center"
+>
+  {channel ? (
+    <img
+      src={channel.image_url}
+      alt={channel.name}
+      className="rounded-full object-cover w-8 h-8"
+    />
+  ) : (
+    <SquareSlash className="w-6 h-6" />
+  )}
+</TooltipButton>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
