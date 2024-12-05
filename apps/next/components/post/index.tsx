@@ -210,11 +210,15 @@ export function Post({
             >
               {address && (
                 <p
-                  className="text-sm button-primary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
-                  onClick={quote}
-                >
-                  Quote
-                </p>
+  className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
+  style={{
+    backgroundColor: 'rgba(124, 101, 193, 0.25)', // Background with 25% opacity
+    padding: '0.5rem 1rem', // Adjust padding as needed
+  }}
+  onClick={quote}
+>
+  Quote
+</p>
               )}
               {address && (
                 <p
