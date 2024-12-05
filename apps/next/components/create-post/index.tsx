@@ -114,12 +114,8 @@ export function CreatePost() {
     width={window.innerWidth}
     height={window.innerHeight}
     colors={[
-      '#808080', // Mid gray
-      '#999999',
-      '#b3b3b3',
-      '#cccccc',
-      '#e6e6e6',
-      '#ffffff', // Pure white
+      '#C848FF', // Vibrant purple
+      '#FFFFFF', // Pure white
     ]}
     drawShape={(ctx) => {
       const shapeType = Math.floor(Math.random() * 3); // Randomly pick a shape
