@@ -288,9 +288,15 @@ function DeleteButton({ cast, tokenAddress }: { cast: Cast; tokenAddress: string
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <p className="text-sm text-red-500 underline decoration-dotted font-semibold cursor-pointer hover:text-red-400">
-          Delete on X
-        </p>
+      <p
+  className="text-sm text-red-500 font-semibold cursor-pointer hover:text-red-400 button-secondary rounded-full"
+  style={{
+    backgroundColor: 'rgba(202, 20, 20, 0.25)',
+    padding: '0.5rem 1rem',
+  }}
+>
+  Delete on X
+</p>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
