@@ -524,13 +524,13 @@ function Channel() {
       <DialogTrigger asChild>
       <TooltipButton
   tooltip="Channel"
-  className="w-10 h-10 sm:w-auto sm:h-auto min-w-10 bg-zinc-950 border border-zinc-700 flex items-center justify-center"
+  className="w-10 h-10 sm:w-auto sm:h-auto bg-zinc-950 border border-zinc-700 rounded-full p-0 flex items-center justify-center"
 >
   {channel ? (
     <img
       src={channel.image_url}
       alt={channel.name}
-      className="rounded-full object-cover w-8 h-8"
+      className="rounded-full w-full h-full object-cover"
     />
   ) : (
     <SquareSlash className="w-6 h-6" />
