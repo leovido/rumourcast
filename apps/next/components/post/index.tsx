@@ -210,7 +210,7 @@ export function Post({
             >
               {address && (
                 <p
-                  className="text-sm button-secondary px-3 py-3 rounded-full font-small"
+                  className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
                   onClick={quote}
                 >
                   Quote
@@ -218,7 +218,7 @@ export function Post({
               )}
               {address && (
                 <p
-                  className="text-sm button-secondary px-3 py-3 rounded-full font-small"
+                  className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
                   onClick={reply}
                 >
                   Reply
