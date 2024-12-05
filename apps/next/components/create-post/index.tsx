@@ -110,38 +110,52 @@ export function CreatePost() {
         </div>
       </div>
       {confetti && (
-        <Confetti
-          width={window.innerWidth}
-          height={window.innerHeight}
-          colors={[
-            '#808080', // Mid gray
-            '#999999',
-            '#b3b3b3',
-            '#cccccc',
-            '#e6e6e6',
-            '#ffffff', // Pure white
-          ]}
-          drawShape={(ctx) => {
-            ctx.beginPath()
-            ctx.lineWidth = 3
+  <Confetti
+    width={window.innerWidth}
+    height={window.innerHeight}
+    colors={[
+      '#808080', // Mid gray
+      '#999999',
+      '#b3b3b3',
+      '#cccccc',
+      '#e6e6e6',
+      '#ffffff', // Pure white
+    ]}
+    drawShape={(ctx) => {
+      const shapeType = Math.floor(Math.random() * 3); // Randomly pick a shape
+      ctx.beginPath();
+      ctx.lineWidth = 2;
 
-            // Draw the main curve of the question mark
-            ctx.moveTo(0, -8)
-            ctx.quadraticCurveTo(8, -8, 8, -16)
-            ctx.quadraticCurveTo(8, -30, 0, -30)
-            ctx.quadraticCurveTo(-8, -30, -8, -20)
+      switch (shapeType) {
+        case 0: // Circle
+          ctx.arc(0, 0, 8, 0, Math.PI * 2, true);
+          break;
 
-            // Draw the dot of the question mark
-            ctx.moveTo(2, 0)
-            ctx.arc(0, 0, 2, 0, Math.PI * 2, true)
+        case 1: // Star
+          for (let i = 0; i < 5; i++) {
+            const angle = ((Math.PI * 2) / 5) * i;
+            const x = Math.cos(angle) * 8;
+            const y = Math.sin(angle) * 8;
+            ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+          break;
 
-            ctx.stroke()
-            ctx.closePath()
-          }}
-          gravity={0.25}
-          recycle={false}
-          onConfettiComplete={() => setConfetti(false)}
-        />
+        case 2: // Square
+          ctx.rect(-8, -8, 16, 16);
+          break;
+
+        default:
+          break;
+      }
+
+      ctx.stroke();
+      ctx.closePath();
+    }}
+    gravity={0.25}
+    recycle={false}
+    onConfettiComplete={() => setConfetti(false)}
+  />
       )}
     </div>
   )
