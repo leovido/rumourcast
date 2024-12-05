@@ -210,15 +210,23 @@ export function Post({
             >
               {address && (
                 <p
-                  className="text-sm underline decoration-dotted font-semibold cursor-pointer hover:text-zinc-400"
-                  onClick={quote}
-                >
-                  Quote
-                </p>
+  className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
+  style={{
+    backgroundColor: 'rgba(124, 101, 193, 0.25)',
+    padding: '0.5rem 1rem',
+  }}
+  onClick={quote}
+>
+  Quote
+</p>
               )}
               {address && (
                 <p
-                  className="text-sm underline decoration-dotted font-semibold cursor-pointer hover:text-zinc-400"
+                className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
+                style={{
+                  backgroundColor: 'rgba(124, 101, 193, 0.25)',
+                  padding: '0.5rem 1rem',
+                }}
                   onClick={reply}
                 >
                   Reply
