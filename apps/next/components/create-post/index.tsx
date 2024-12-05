@@ -530,7 +530,7 @@ function Channel() {
             <img
               src={channel.image_url}
               alt={channel.name}
-              className="rounded-sm w-full h-full object-cover"
+              className="rounded-full w-full h-full object-cover"
             />
           ) : (
             <SquareSlash />
@@ -547,7 +547,7 @@ function Channel() {
             id="channel"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="memes"
+            placeholder="rumours"
           />
           {error && <p className="text-red-500">{error}</p>}
         </div>
