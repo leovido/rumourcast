@@ -49,8 +49,7 @@ export function Post({
   const canDelete =
     address &&
     !!balance &&
-    balance >= BigInt(TOKEN_CONFIG[tokenAddress].deleteAmount) &&
-    cast.tweetId
+    balance >= BigInt(TOKEN_CONFIG[tokenAddress].deleteAmount)
 
   const canReveal = address && !!cast.reveal && !cast.reveal.revealedAt
 
@@ -211,15 +210,23 @@ export function Post({
             >
               {address && (
                 <p
-                  className="text-sm underline decoration-dotted font-semibold cursor-pointer hover:text-zinc-400"
-                  onClick={quote}
-                >
-                  Quote
-                </p>
+  className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
+  style={{
+    backgroundColor: 'rgba(124, 101, 193, 0.25)',
+    padding: '0.5rem 1rem',
+  }}
+  onClick={quote}
+>
+  Quote
+</p>
               )}
               {address && (
                 <p
-                  className="text-sm underline decoration-dotted font-semibold cursor-pointer hover:text-zinc-400"
+                className="text-sm button-secondary rounded-full font-semibold cursor-pointer hover:text-zinc-400"
+                style={{
+                  backgroundColor: 'rgba(124, 101, 193, 0.25)',
+                  padding: '0.5rem 1rem',
+                }}
                   onClick={reply}
                 >
                   Reply
@@ -281,7 +288,7 @@ function DeleteButton({ cast, tokenAddress }: { cast: Cast; tokenAddress: string
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <p className="text-sm text-red-500 underline decoration-dotted font-semibold cursor-pointer hover:text-red-400">
+        <p className="text-sm text-red-500 font-semibold cursor-pointer hover:text-red-400">
           Delete on X
         </p>
       </AlertDialogTrigger>

@@ -120,6 +120,7 @@ export function CreatePost() {
       '#cccccc',
       '#e6e6e6',
       '#ffffff', // Pure white
+      '#C848FF', // Vibrant purple
     ]}
     drawShape={(ctx) => {
       const shapeType = Math.floor(Math.random() * 3); // Randomly pick a shape
@@ -156,7 +157,7 @@ export function CreatePost() {
     recycle={false}
     onConfettiComplete={() => setConfetti(false)}
   />
-      )}
+)}
     </div>
   )
 }
@@ -534,7 +535,7 @@ function Channel() {
             <img
               src={channel.image_url}
               alt={channel.name}
-              className="rounded-sm w-full h-full object-cover"
+              className="rounded-full w-full h-full object-cover"
             />
           ) : (
             <SquareSlash />
@@ -551,7 +552,7 @@ function Channel() {
             id="channel"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="memes"
+            placeholder="rumours"
           />
           {error && <p className="text-red-500">{error}</p>}
         </div>
