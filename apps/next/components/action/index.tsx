@@ -24,7 +24,7 @@ export default function ActionComponent({
     <div className="rounded-2xl">
       <Alert className="flex flex-col px-6 py-8 gap-4 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-2xl border-none shadow-lg shadow-black-500/50">
         <AlertTitle className="font-semibold text-3xl">
-          Heard a rumour? 👀<br /> Share it!
+          I heard a rumour... 👀<br /> Gossip on Farcaster!
         </AlertTitle>
         <AlertDescription>
           <p className="text-zinc-200">
