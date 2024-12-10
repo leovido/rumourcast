@@ -91,7 +91,7 @@ export function CreatePost() {
           <Button
             onClick={createPost}
             className="font-bold text-base rounded-full hover:scale-105 transition-all duration-300 py-6"
-            disabled={!['idle', 'success', 'error'].includes(state.status)}
+            disabled={!['idle', 'success', 'error'].includes(state.status) || text === ''}
           >
             {state.status === 'generating' ? (
               <div className="flex flex-row items-center gap-2">
