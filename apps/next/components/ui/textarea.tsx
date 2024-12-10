@@ -2,8 +2,12 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'> & { text?: string, defaultValue: string }>(
-  ({ className, defaultValue = "", text = "", onChange, ...props }, ref) => {    
+const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'> & { 
+  text?: string, 
+  defaultValue: string,
+  disabled?: boolean 
+}>(
+  ({ className, defaultValue = "", text = "", onChange, disabled = false, ...props }, ref) => {    
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = e.target.value
       
@@ -53,6 +57,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'tex
         value={defaultValue + (text || '')}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        disabled={disabled}
         ref={ref}
         {...props}
       />
