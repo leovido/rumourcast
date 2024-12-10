@@ -70,7 +70,7 @@ export function CreatePost() {
       <RemoveableParent />
       <Textarea
   defaultValue="I heard a rumour... "
-  text={text ?? ''}
+  text={text ?? ' '}
   onChange={handleSetText}
   className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950/50 border border-zinc-900/20"
 />
@@ -91,7 +91,7 @@ export function CreatePost() {
           <Button
             onClick={createPost}
             className="font-bold text-base rounded-full hover:scale-105 transition-all duration-300 py-6"
-            disabled={!['idle', 'success', 'error'].includes(state.status) || text === ''}
+            disabled={!['idle', 'success', 'error'].includes(state.status)}
           >
             {state.status === 'generating' ? (
               <div className="flex flex-row items-center gap-2">
