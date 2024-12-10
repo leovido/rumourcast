@@ -70,7 +70,7 @@ export function CreatePost() {
       <RemoveableParent />
       <Textarea
   defaultValue="I heard a rumour... "
-  text={text ?? ''}
+  text={text ?? ' '}
   onChange={handleSetText}
   className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950/50 border border-zinc-900/20"
 />
