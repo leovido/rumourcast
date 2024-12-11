@@ -11,7 +11,9 @@ import { SDKProvider } from '@anonworld/react'
 
 const config = getDefaultConfig({
   appName: 'RumourCast',
-  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
+  projectId:
+    process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ||
+    'c615d5a18982cf9eb69f78706b187884',
   chains: [base],
   ssr: true,
 })
