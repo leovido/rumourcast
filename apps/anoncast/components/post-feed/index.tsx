@@ -10,17 +10,18 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { BEST_OF_FID, FID, LAUNCH_FID } from '@/lib/utils'
 import { useSDK } from '@anonworld/react'
+
 export function PostFeed({
-  defaultTab = 'trending',
+  defaultTab = '🔥 Hot',
 }: {
-  defaultTab?: 'new' | 'trending'
+  defaultTab?: '👀 Fresh rumours' | '🔥 Hot'
 }) {
   const { sdk } = useSDK()
-  const [selected, setSelected] = useState<'new' | 'trending'>(defaultTab)
+  const [selected, setSelected] = useState<'🔥 Hot' | '👀 Fresh rumours'>(defaultTab)
   const router = useRouter()
 
   const { data: trendingPosts, isLoading: isTrendingLoading } = useQuery({
-    queryKey: ['trending'],
+    queryKey: ['🔥 Hot'],
     queryFn: async (): Promise<Cast[]> => {
       const response = await sdk.getTrendingFeed(BEST_OF_FID)
       return response?.data?.data || []
@@ -41,16 +42,16 @@ export function PostFeed({
     <div className="flex flex-col gap-4 ">
       <div className="flex flex-row justify-between">
         <AnimatedTabs
-          tabs={['trending', 'new']}
+          tabs={['🔥 Hot', '👀 Fresh rumours']}
           activeTab={selected}
           onTabChange={(tab) => {
-            setSelected(tab as 'new' | 'trending')
-            router.push(tab === 'new' ? '/anoncast/new' : '/')
+            setSelected(tab as '🔥 Hot' | '👀 Fresh rumours')
+            router.push(tab === '👀 Fresh rumours' ? '/anoncast/new' : '/')
           }}
           layoutId="feed-tabs"
         />
       </div>
-      {selected === 'new' ? (
+      {selected === '👀 Fresh rumours' ? (
         isNewLoading ? (
           <SkeletonPosts />
         ) : newPosts?.length && newPosts?.length > 0 ? (

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useSDK } from '../sdk'
 import { useAccount } from 'wagmi'
-import { useCredentials } from './use-credentials'
 
 export type PerformActionStatus =
   | {
@@ -59,9 +58,9 @@ export const usePerformAction = ({
       setStatus({ status: 'loading' })
 
       const credentialId =
-        actionId === 'e6138573-7b2f-43ab-b248-252cdf5eaeee'
-          ? 'erc20-balance:8453:0x0db510e79909666d6dec7f5e49370838c16d950f:5000000000000000000000'
-          : 'erc20-balance:8453:0x0db510e79909666d6dec7f5e49370838c16d950f:2000000000000000000000000'
+        actionId === '4de8ac8d-b90c-4926-98cd-123925736145'
+          ? 'rumour-holder-10M'
+          : 'delete-post'
 
       let credential = credentials.get(credentialId)
       if (!credential) {

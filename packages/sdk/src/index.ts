@@ -16,7 +16,7 @@ export class AnonWorldSDK extends Api {
   private hasher!: (a: string, b: string) => string
 
   constructor(apiUrl?: string) {
-    super(apiUrl || 'https://api.anon.world')
+    super(apiUrl || 'http://localhost:3001')
   }
 
   async instantiate() {
