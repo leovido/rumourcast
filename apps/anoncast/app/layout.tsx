@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         title: 'Post anonymously',
         action: {
           type: 'launch_frame',
-          name: 'anoncast',
+          name: 'RumourCast',
           url: 'https://frame.anoncast.org',
           splashImageUrl: 'https://anoncast.org/anon.png',
           splashBackgroundColor: '#151515',

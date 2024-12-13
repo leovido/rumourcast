@@ -27,11 +27,11 @@ export default function ActionComponent({
   const DELETE_POST = BigInt(DELETE_AMOUNT) / BigInt(10 ** 18)
 
   // Default values for post variant
-  const defaultTitle = 'Post anonymously to Farcaster'
+  const defaultTitle = 'I heard a rumour... 👀  Gossip on Farcaster'
   const defaultDescription =
     "Posts are made anonymous using zk proofs. Due to the complex calculations required, it could take up to a few minutes. Do not post porn, doxes, shills, or threats. This is not about censorship resistance - it's about great anonymous posts."
   const defaultRequirements = [
-    { amount: Number(FARCASTER_POST), label: 'Post to @rawanon' },
+    //{ amount: Number(FARCASTER_POST), label: 'Post to @rawanon' },
     {
       amount: Number(TWITTER_PROMOTE),
       label: 'Promote posts to @anoncast and X/Twitter',
@@ -76,7 +76,7 @@ export default function ActionComponent({
           >
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded flex flex-row items-center justify-between gap-2">
               <p className="font-bold flex flex-row items-center gap-2">
-                {`You need 5000 $ANON to post. Click here to buy.`}
+                {`You need 10,000,000 $RUMOUR to post. Click here to buy.`}
                 <ExternalLink size={16} />
               </p>
             </div>

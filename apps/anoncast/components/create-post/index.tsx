@@ -89,10 +89,10 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
       <Textarea
         value={text ?? ''}
         onChange={handleSetText}
-        className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950 border border-zinc-700"
+        className="h-32 p-3 resize-none font-medium rounded-xl !text-base placeholder:text-zinc-400 bg-zinc-950/50 "
         placeholder={
           variant === 'post'
-            ? "What's happening, anon?"
+            ? "I heard a rumour..."
             : 'Hey @clanker please launch a coin called "Hello" with the ticker $HI! I want this image...'
         }
       />
@@ -111,55 +111,63 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
         <div className="flex flex-row items-center gap-4 sm: justify-between">
           <p className="font-medium text-zinc-400">{`${length} / 320`}</p>
           <Button
-            onClick={createPost}
-            className="font-bold text-md rounded-md hover:scale-105 transition-all duration-300"
-            disabled={!['idle', 'success', 'error'].includes(status.status)}
-          >
-            {status.status === 'loading' ? (
-              <div className="flex flex-row items-center gap-2">
-                <Loader2 className="animate-spin" />
-                <p>Generating proof</p>
-              </div>
-            ) : (
-              'Post anonymously'
-            )}
-          </Button>
+  onClick={createPost}
+  className="font-bold text-lg px-4 py-6 rounded-full hover:scale-105 transition-all duration-300"
+  disabled={!['idle', 'success', 'error'].includes(status.status)}
+>
+  {status.status === 'loading' ? (
+    <div className="flex flex-row items-center gap-2">
+      <Loader2 className="animate-spin" />
+      <p>Generating proof</p>
+    </div>
+  ) : (
+    'Cast rumour 👀'
+  )}
+</Button>
         </div>
       </div>
-      {confetti && (
-        <Confetti
-          width={window.innerWidth}
-          height={window.innerHeight}
-          colors={[
-            '#808080', // Mid gray
-            '#999999',
-            '#b3b3b3',
-            '#cccccc',
-            '#e6e6e6',
-            '#ffffff', // Pure white
-          ]}
-          drawShape={(ctx) => {
-            ctx.beginPath()
-            ctx.lineWidth = 3
+      <Confetti
+    width={window.innerWidth}
+    height={window.innerHeight}
+    colors={[
+      '#C848FF', // Vibrant purple
+      '#FFFFFF', // Pure white
+    ]}
+    drawShape={(ctx) => {
+      const shapeType = Math.floor(Math.random() * 3); // Randomly pick a shape
+      ctx.beginPath();
+      ctx.lineWidth = 2;
 
-            // Draw the main curve of the question mark
-            ctx.moveTo(0, -8)
-            ctx.quadraticCurveTo(8, -8, 8, -16)
-            ctx.quadraticCurveTo(8, -30, 0, -30)
-            ctx.quadraticCurveTo(-8, -30, -8, -20)
+      switch (shapeType) {
+        case 0: // Circle
+          ctx.arc(0, 0, 8, 0, Math.PI * 2, true);
+          break;
 
-            // Draw the dot of the question mark
-            ctx.moveTo(2, 0)
-            ctx.arc(0, 0, 2, 0, Math.PI * 2, true)
+        case 1: // Star
+          for (let i = 0; i < 5; i++) {
+            const angle = ((Math.PI * 2) / 5) * i;
+            const x = Math.cos(angle) * 8;
+            const y = Math.sin(angle) * 8;
+            ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+          break;
 
-            ctx.stroke()
-            ctx.closePath()
-          }}
-          gravity={0.25}
-          recycle={false}
-          onConfettiComplete={() => setConfetti(false)}
-        />
-      )}
+        case 2: // Square
+          ctx.rect(-8, -8, 16, 16);
+          break;
+
+        default:
+          break;
+      }
+
+      ctx.stroke();
+      ctx.closePath();
+    }}
+    gravity={0.25}
+    recycle={false}
+    onConfettiComplete={() => setConfetti(false)}
+  />
     </div>
   )
 }
@@ -253,7 +261,7 @@ function UploadImage() {
         tooltip="Upload image"
         onClick={() => fileInputRef.current?.click()}
         disabled={loading || !!image || embedCount >= MAX_EMBEDS}
-        className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+        className="w-full sm:w-auto min-w-10 bg-zinc-950"
       >
         <input
           ref={fileInputRef}
@@ -268,7 +276,7 @@ function UploadImage() {
       </TooltipButton>
 
       {error && (
-        <div className="absolute top-12 left-0 z-10 bg-red-100 text-red-700 px-3 py-2 rounded-md text-sm">
+        <div className="absolute top-12 left-0 z-10 bg-red-100 text-red-700 px-3 py-2 rounded-full text-sm">
           {error}
         </div>
       )}
@@ -312,7 +320,7 @@ function EmbedLink() {
         <TooltipButton
           tooltip="Embed link"
           disabled={!!embed || embedCount >= MAX_EMBEDS}
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950"
         >
           <Link />
         </TooltipButton>
@@ -365,7 +373,7 @@ function RemoveableEmbed() {
   return (
     <div className="relative">
       <div
-        className="w-full border rounded-xl overflow-hidden cursor-pointer"
+        className="w-full rounded-xl overflow-hidden cursor-pointer"
         onClick={() => window.open(embed, '_blank')}
       >
         {image && (
@@ -415,7 +423,7 @@ function ParentCast() {
         <TooltipButton
           tooltip="Reply to post"
           disabled={!!parent}
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950"
         >
           <Reply />
         </TooltipButton>
@@ -524,13 +532,13 @@ function Channel() {
       <DialogTrigger asChild>
         <TooltipButton
           tooltip="Channel"
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950"
         >
           {channel ? (
             <img
               src={channel.image_url}
               alt={channel.name}
-              className="rounded-sm w-full h-full object-cover"
+              className="rounded-xl w-full h-full object-cover"
             />
           ) : (
             <SquareSlash />
@@ -588,7 +596,7 @@ function QuoteCast() {
         <TooltipButton
           tooltip="Quote post"
           disabled={!!quote || embedCount >= MAX_EMBEDS}
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950"
         >
           <Quote />
         </TooltipButton>

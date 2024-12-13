@@ -253,7 +253,7 @@ function UploadImage() {
       </TooltipButton>
 
       {error && (
-        <div className="absolute top-12 left-0 z-10 bg-red-100 text-red-700 px-3 py-2 rounded-md text-sm">
+        <div className="absolute top-12 left-0 z-10 bg-red-100 text-red-700 px-3 py-2 rounded-full text-sm">
           {error}
         </div>
       )}

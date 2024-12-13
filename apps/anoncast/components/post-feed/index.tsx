@@ -141,7 +141,7 @@ function SkeletonPosts() {
 
 function SkeletonPost() {
   return (
-    <div className="relative [overflow-wrap:anywhere] bg-[#111111] rounded-xl overflow-hidden">
+    <div className="relative [overflow-wrap:anywhere] bg-[#111111]/10 rounded-xl overflow-hidden">
       <div className="flex flex-col gap-4 border p-4 sm:p-6 rounded-xl">
         <div className="space-y-2">
           <Skeleton className="h-4 w-[250px]" />
