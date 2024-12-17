@@ -4,7 +4,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  @apply bg-fixed bg-gradient-to-b from-[#191919] via-[#1b1a1b] to-[#2c1c35] text-foreground;
+  @apply bg-fixed bg-gradient-to-b from-[#070707] via-[#201424] to-[#41214D] text-foreground;
 }
 
 @layer utilities {
@@ -78,7 +78,7 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-gradient-to-b from-[#191919] via-[#1b1a1b] to-[#2c1c35] text-foreground;
+    @apply bg-gradient-to-b from-[#070707] via-[#201424] to-[#41214D] text-foreground;
   }
   .gradient-border-wrapper {
     padding: 1px;
