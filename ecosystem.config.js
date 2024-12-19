@@ -2,9 +2,8 @@ module.exports = {
   apps: [
     {
       name: "rumourcast-api",
-      script: "bun",
-      args: "run index.ts",
-      cwd: "packages/api/src",
+      script: "./packages/api/src/index.ts",
+      interpreter: "bun",
       watch: false,
       env: {
         NODE_ENV: "production",
