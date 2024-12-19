@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/lib/hooks/use-toast'
-import { Coins, Heart, Loader2, MessageSquare, RefreshCcw } from 'lucide-react'
+import { Heart, Loader2, MessageSquare, RefreshCcw } from 'lucide-react'
 import { useState } from 'react'
 import { useCreatePost } from '../create-post/context'
 import { useAccount, useSignMessage } from 'wagmi'
@@ -29,7 +29,7 @@ import {
   LAUNCH_ACTION_ID,
 } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
-import { formatEther, hashMessage } from 'viem'
+import { hashMessage } from 'viem'
 import { Input } from '../ui/input'
 import { useQuery } from '@tanstack/react-query'
 import { usePerformAction, useSDK } from '@anonworld/react'
@@ -139,7 +139,7 @@ export function Post({
                 <div className="text-sm font-medium text-zinc-400">
                   {timeAgo(cast.timestamp)}
                 </div>
-                {cast.credentials.map((c) => (
+                {/* {cast.credentials.map((c) => (
                   <div
                     key={c.id}
                     className="text-xs font-medium border text-zinc-400 px-2 py-1 rounded-xl flex flex-row items-center gap-1"
@@ -147,7 +147,7 @@ export function Post({
                     <Coins size={12} />
                     {`${formatNumber(Number.parseFloat(formatEther(BigInt(c.metadata.minBalance))))}+ ${c.metadata.ticker}`}
                   </div>
-                ))}
+                ))} */}
                 {cast.parent_hash && (
                   <>
                     <div className="w-1 h-1 bg-zinc-400" />

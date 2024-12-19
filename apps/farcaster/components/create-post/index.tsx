@@ -30,6 +30,7 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
   const { text, setText, createPost, status, quote, setQuote, confetti, setConfetti } =
     useCreatePost()
 
+  const isUploadImageAvailable = false
   const length = new Blob([text ?? '']).size
 
   const handleSetText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -665,8 +666,8 @@ function RevealPhrase() {
         className="flex flex-row items-center gap-2 cursor-pointer"
         onClick={() => setEnabled(!enabled)}
       >
-        <Checkbox checked={enabled} />
-        <p className="text-sm">Reveal yourself at a later date</p>
+        {/* <Checkbox checked={enabled} />
+        <p className="text-sm">Reveal yourself at a later date</p> */}
       </div>
       {enabled && (
         <div className="flex flex-col gap-4">
