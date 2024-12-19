@@ -93,19 +93,19 @@ export const CreatePostProvider = ({
 
   const createPost = async () => {
     const data = {
-      text: 'I heard a rumour... ' + text ?? ' ',
+      text: text ?? undefined,
       embeds: [image, embed].filter((e) => e !== null) as string[],
       quote: quote?.hash,
       channel: channel?.id,
       parent: parent?.hash,
     }
 
-    // await performAction(CREATE_ACTION_ID, {
-    //   ...data,
-    //   revealHash: revealPhrase
-    //     ? hashMessage(JSON.stringify(data) + revealPhrase)
-    //     : undefined,
-    // })
+    await performAction(CREATE_ACTION_ID, {
+      ...data,
+      revealHash: revealPhrase
+        ? hashMessage(JSON.stringify(data) + revealPhrase)
+        : undefined,
+    })
   }
 
   const embedCount = [image, embed, quote].filter((e) => e !== null).length

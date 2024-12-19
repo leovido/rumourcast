@@ -2,40 +2,34 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-const Textarea = React.forwardRef<
-  HTMLTextAreaElement,
-  React.ComponentProps<'textarea'> & {
-    text?: string
-    defaultValue: string
-    disabled?: boolean
-  }
->(
-  (
-    { className, defaultValue = '', text = '', onChange, disabled = false, ...props },
-    ref
-  ) => {
+const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'> & { 
+  text?: string, 
+  defaultValue: string,
+  disabled?: boolean 
+}>(
+  ({ className, defaultValue = "", text = "", onChange, disabled = false, ...props }, ref) => {    
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = e.target.value
-
+      
       if (!newValue.startsWith(defaultValue)) {
         const newEvent = {
           ...e,
           target: {
             ...e.target,
-            value: newValue,
-          },
+            value: defaultValue
+          }
         }
         onChange?.(newEvent as React.ChangeEvent<HTMLTextAreaElement>)
         return
       }
-
+      
       const newContent = newValue.slice(defaultValue.length)
       const newEvent = {
         ...e,
         target: {
           ...e.target,
-          value: newContent,
-        },
+          value: newContent
+        }
       }
       onChange?.(newEvent as React.ChangeEvent<HTMLTextAreaElement>)
     }
@@ -43,14 +37,10 @@ const Textarea = React.forwardRef<
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
       const target = e.target as HTMLTextAreaElement
       const selectionStart = target.selectionStart
-
-      if (
-        selectionStart! <= defaultValue.length &&
-        (e.key === 'Backspace' ||
-          e.key === 'Delete' ||
-          e.key === 'ArrowLeft' ||
-          e.key === 'Home')
-      ) {
+      
+      if (selectionStart! <= defaultValue.length && 
+          (e.key === 'Backspace' || e.key === 'Delete' || 
+           e.key === 'ArrowLeft' || e.key === 'Home')) {
         e.preventDefault()
         if (e.key === 'Home') {
           target.setSelectionRange(defaultValue.length, defaultValue.length)
