@@ -6,6 +6,7 @@ import { GeistSans } from 'geist/font/sans';
 import { ConnectButton } from '@/components/connect-button';
 import { Logo } from '@/components/logo';
 import BackToTopButton from '@/components/ui/back-to-top-button';
+import HamburgerMenuButton from '@/components/ui/hamburger-menu-button';
 
 export const metadata: Metadata = {
   title: 'Rumourcast',
@@ -14,6 +15,22 @@ export const metadata: Metadata = {
     title: 'Rumourcast',
     description: 'Spread rumours anonymously to Farcaster.',
     images: ['/rumour.webp'],
+  },
+  other: {
+    ['fc:frame']: JSON.stringify({
+      version: 'next',
+      imageUrl: 'https://anoncast.org/banner.png',
+      button: {
+        title: 'Post anonymously',
+        action: {
+          type: 'launch_frame',
+          name: 'RumourCast',
+          url: 'https://frame.anoncast.org',
+          splashImageUrl: 'https://anoncast.org/anon.png',
+          splashBackgroundColor: '#151515',
+        },
+      },
+    }),
   },
 };
 
@@ -29,18 +46,29 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={`${GeistSans.className} antialiased min-h-screen w-full`}>
+      <body
+        className={`${GeistSans.className} antialiased min-h-screen w-full overflow-x-hidden`}
+      >
         <Providers>
-          <div className="flex h-screen flex-col p-4 xl:p-8 xl:pt-16 max-w-screen-sm mx-auto gap-8">
-            <div className="flex items-center justify-between xl:absolute xl:top-0 xl:left-0 xl:right-0 xl:p-8 xl:pt-16 xl:max-w-screen-xl xl:mx-auto">
+          {/* Fixed Header */}
+          <header className="sticky top-0 z-50 backdrop-blur-md w-full px-4 xl:px-8 py-4">
+            <div className="flex items-center justify-between">
               <Logo />
-              <ConnectButton />
+              <div className="flex items-center gap-4">
+                <ConnectButton />
+                <HamburgerMenuButton />
+              </div>
             </div>
-            <div className="z-10">{children}</div>
+          </header>
+
+          {/* Main Content */}
+          <div className="flex flex-col min-h-screen max-w-screen-sm mx-auto p-4 xl:p-8 gap-8">
+            <main className="flex-1 w-full">{children}</main>
           </div>
         </Providers>
         <Toaster />
         <BackToTopButton />
+        
       </body>
     </html>
   );

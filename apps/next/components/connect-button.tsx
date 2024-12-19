@@ -40,7 +40,7 @@ export const ConnectButton = () => {
                 return (
                   <Button
                     onClick={openConnectModal}
-                    className="font-bold text-md rounded-full hover:scale-105 transition-all duration-300"
+                    className="font-bold text-md rounded-full hover:scale-105 transition-all duration-300 h-14"
                   >
                     Connect
                   </Button>
@@ -50,7 +50,7 @@ export const ConnectButton = () => {
                 return (
                   <Button
                     onClick={openChainModal}
-                    className="font-bold text-md rounded-full hover:scale-105 transition-all duration-300"
+                    className="font-bold text-md rounded-full hover:scale-105 transition-all duration-300 h-14"
                   >
                     Switch Network
                   </Button>
@@ -60,7 +60,7 @@ export const ConnectButton = () => {
                 <button
                 type="button"
                 onClick={openAccountModal}
-                className="flex flex-row rounded-full overflow-hidden items-center hover:scale-105 transition-all duration-300 gradient-border-wrapper sm:space-x-2 space-x-1"
+                className="flex flex-row rounded-full overflow-hidden items-center hover:scale-105 transition-all duration-300 gradient-border-wrapper sm:space-x-2 space-x-1 h-14"
               >
                 <Balance />
                 <div
