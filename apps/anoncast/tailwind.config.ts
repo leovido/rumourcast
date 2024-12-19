@@ -56,8 +56,12 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      rotate: {
+        15: '15deg', // Custom rotation value
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
 }
+
 export default config
