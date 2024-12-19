@@ -1,6 +1,6 @@
 import { type Elysia, t } from 'elysia'
 
-const API_URL = 'https://api.uno.fun/v1/uploads'
+const API_URL = 'https://api.imgbb.com/1/upload'
 const UPLOAD_API_KEY = process.env.UPLOAD_API_KEY ?? ''
 
 // Define the upload model schema

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 export const runtime = 'edge'
 
-const API_URL = 'https://api.uno.fun/v1/uploads'
+const API_URL = 'https://api.imgbb.com/1/upload'
 const UPLOAD_API_KEY = process.env.UPLOAD_API_KEY ?? '' // Add your own API key here
 
 async function uploadImage(file: FormDataEntryValue) {

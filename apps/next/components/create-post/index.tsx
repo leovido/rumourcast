@@ -81,7 +81,7 @@ export function CreatePost() {
       <RemoveableQuote />
       <div className="flex flex-col sm:flex-row justify-between gap-4 xs:gap-0">
         <div className="flex gap-4">
-          {isUploadImageAvailable && <UploadImage />}
+        <UploadImage />
           <EmbedLink />
           <ParentCast />
           <QuoteCast />
