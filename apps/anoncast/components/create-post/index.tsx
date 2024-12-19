@@ -87,12 +87,13 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
     <div className="flex flex-col gap-4">
       <RemoveableParent />
       <Textarea
+        defaultValue={''}
         value={text ?? ''}
         onChange={handleSetText}
         className="h-32 p-3 resize-none font-medium rounded-xl !text-base placeholder:text-zinc-400 bg-zinc-950/50 "
         placeholder={
           variant === 'post'
-            ? "I heard a rumour..."
+            ? 'I heard a rumour...'
             : 'Hey @clanker please launch a coin called "Hello" with the ticker $HI! I want this image...'
         }
       />
@@ -111,63 +112,65 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
         <div className="flex flex-row items-center gap-4 sm: justify-between">
           <p className="font-medium text-zinc-400">{`${length} / 320`}</p>
           <Button
-  onClick={createPost}
-  className="font-bold text-lg px-4 py-6 rounded-full hover:scale-105 transition-all duration-300"
-  disabled={!['idle', 'success', 'error'].includes(status.status)}
->
-  {status.status === 'loading' ? (
-    <div className="flex flex-row items-center gap-2">
-      <Loader2 className="animate-spin" />
-      <p>Generating proof</p>
-    </div>
-  ) : (
-    'Cast rumour 👀'
-  )}
-</Button>
+            onClick={createPost}
+            className="font-bold text-lg px-4 py-6 rounded-full hover:scale-105 transition-all duration-300"
+            disabled={!['idle', 'success', 'error'].includes(status.status)}
+          >
+            {status.status === 'loading' ? (
+              <div className="flex flex-row items-center gap-2">
+                <Loader2 className="animate-spin" />
+                <p>Generating proof</p>
+              </div>
+            ) : (
+              'Cast rumour 👀'
+            )}
+          </Button>
         </div>
       </div>
-      <Confetti
-    width={window.innerWidth}
-    height={window.innerHeight}
-    colors={[
-      '#C848FF', // Vibrant purple
-      '#FFFFFF', // Pure white
-    ]}
-    drawShape={(ctx) => {
-      const shapeType = Math.floor(Math.random() * 3); // Randomly pick a shape
-      ctx.beginPath();
-      ctx.lineWidth = 2;
+      {confetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          colors={[
+            '#C848FF', // Vibrant purple
+            '#FFFFFF', // Pure white
+          ]}
+          drawShape={(ctx) => {
+            const shapeType = Math.floor(Math.random() * 3) // Randomly pick a shape
+            ctx.beginPath()
+            ctx.lineWidth = 2
 
-      switch (shapeType) {
-        case 0: // Circle
-          ctx.arc(0, 0, 8, 0, Math.PI * 2, true);
-          break;
+            switch (shapeType) {
+              case 0: // Circle
+                ctx.arc(0, 0, 8, 0, Math.PI * 2, true)
+                break
 
-        case 1: // Star
-          for (let i = 0; i < 5; i++) {
-            const angle = ((Math.PI * 2) / 5) * i;
-            const x = Math.cos(angle) * 8;
-            const y = Math.sin(angle) * 8;
-            ctx.lineTo(x, y);
-          }
-          ctx.closePath();
-          break;
+              case 1: // Star
+                for (let i = 0; i < 5; i++) {
+                  const angle = ((Math.PI * 2) / 5) * i
+                  const x = Math.cos(angle) * 8
+                  const y = Math.sin(angle) * 8
+                  ctx.lineTo(x, y)
+                }
+                ctx.closePath()
+                break
 
-        case 2: // Square
-          ctx.rect(-8, -8, 16, 16);
-          break;
+              case 2: // Square
+                ctx.rect(-8, -8, 16, 16)
+                break
 
-        default:
-          break;
-      }
+              default:
+                break
+            }
 
-      ctx.stroke();
-      ctx.closePath();
-    }}
-    gravity={0.25}
-    recycle={false}
-    onConfettiComplete={() => setConfetti(false)}
-  />
+            ctx.stroke()
+            ctx.closePath()
+          }}
+          gravity={0.25}
+          recycle={false}
+          onConfettiComplete={() => setConfetti(false)}
+        />
+      )}
     </div>
   )
 }
