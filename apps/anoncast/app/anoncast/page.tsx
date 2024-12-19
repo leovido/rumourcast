@@ -2,7 +2,6 @@
 
 import ActionComponent from '@/components/action'
 import { PostFeed, PromotedFeed } from '@/components/post-feed'
-import AnimatedTabs from '@/components/post-feed/animated-tabs'
 import { CreatePostProvider, useCreatePost } from '@/components/create-post/context'
 
 export default function Home() {

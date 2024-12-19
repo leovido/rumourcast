@@ -1,8 +1,7 @@
 'use client'
 
 import ActionComponent from '@/components/action'
-import { PostFeed, PromotedFeed } from '@/components/post-feed'
-import AnimatedTabs from '@/components/post-feed/animated-tabs'
+import { PostFeed } from '@/components/post-feed'
 import { CreatePostProvider, useCreatePost } from '@/components/create-post/context'
 
 export default function Home() {
@@ -14,7 +13,7 @@ export default function Home() {
 }
 
 function Inner() {
-  const { variant, setVariant } = useCreatePost()
+  const { variant } = useCreatePost()
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">

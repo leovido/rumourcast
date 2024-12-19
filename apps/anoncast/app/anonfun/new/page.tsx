@@ -39,7 +39,7 @@ function Inner() {
           />
         )}
       </div>
-      {variant === 'anoncast' && <PostFeed defaultTab="new" />}
+      {variant === 'anoncast' && <PostFeed defaultTab="👀 Fresh rumours" />}
       {variant === 'anonfun' && <PromotedFeed defaultTab="new" />}
     </div>
   )
