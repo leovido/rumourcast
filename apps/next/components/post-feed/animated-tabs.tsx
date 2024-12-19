@@ -20,16 +20,16 @@ export default function AnimatedTabs({
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
   return (
-    <div className="gradient-border-wrapper rounded-full">
+    <div className="relative cursor-pointer font-semibold transition-colors flex rounded-full">
       <motion.div
-        className="flex gap-4 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full p-1"
+        className="gradient-border-wrapper rounded-full flex gap-1 p-1 w-fit bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary"
         layout
         transition={{ duration: 0.0 }}
       >
         {tabs.map((tab) => (
           <ul
             className={clsx(
-              "relative cursor-pointer pl-2 pr-3 py-1 font-semibold outline-none transition-colors",
+              "relative cursor-pointer px-4 py-2 font-semibold transition-colors flex rounded-full",
               activeTab === tab ? "text-zinc-900" : "text-zinc-400"
             )}
             tabIndex={0}
