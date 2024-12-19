@@ -27,7 +27,7 @@ export default function ActionComponent({
 
   // Default values for post variant
   const defaultDescription =
-    'Rumours are made anonymous using zk proofs. Due to the complex calculations required, it could take up to a few minutes for your rumour to be posted. Do not post porn, doxes, shills, or threats. This is for sharing rumours - not enabling bad behaviour.'
+    'Rumours are made anonymous using zk proofs. Do not post porn, doxes, shills, or threats. This is for sharing rumours and gossip - not enabling bad behaviour.'
   const defaultRequirements = [
     //{ amount: Number(FARCASTER_POST), label: 'Post to @rawanon' },
     {
