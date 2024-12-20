@@ -29,7 +29,7 @@ import {
   LAUNCH_ACTION_ID,
 } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
-import { formatEther, hashMessage } from 'viem'
+import { hashMessage } from 'viem'
 import { Input } from '../ui/input'
 import { useQuery } from '@tanstack/react-query'
 import { usePerformAction, useSDK } from '@anonworld/react'
