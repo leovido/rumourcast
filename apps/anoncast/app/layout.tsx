@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import { Providers } from '@/components/providers';
-import { Toaster } from '@/components/ui/toaster';
-import { GeistSans } from 'geist/font/sans';
-import { ConnectButton } from '@/components/connect-button';
-import { Logo } from '@/components/logo';
-import BackToTopButton from '@/components/ui/back-to-top-button';
-import HamburgerMenuButton from '@/components/ui/hamburger-menu-button';
+import type { Metadata } from 'next'
+import './globals.css'
+import { Providers } from '@/components/providers'
+import { Toaster } from '@/components/ui/toaster'
+import { GeistSans } from 'geist/font/sans'
+import { ConnectButton } from '@/components/connect-button'
+import { Logo } from '@/components/logo'
+import BackToTopButton from '@/components/ui/back-to-top-button'
+import HamburgerMenuButton from '@/components/ui/hamburger-menu-button'
 
 export const metadata: Metadata = {
   title: 'Rumourcast',
@@ -19,25 +19,25 @@ export const metadata: Metadata = {
   other: {
     ['fc:frame']: JSON.stringify({
       version: 'next',
-      imageUrl: 'https://anoncast.org/banner.png',
+      imageUrl: 'https://rumourcast.xyz/logo.svg',
       button: {
-        title: 'Post anonymously',
+        title: 'Post rumours',
         action: {
           type: 'launch_frame',
           name: 'RumourCast',
-          url: 'https://frame.anoncast.org',
-          splashImageUrl: 'https://anoncast.org/anon.png',
+          url: 'https://frame.rumourcast.xyz',
+          splashImageUrl: 'https://rumourcast.xyz/logo.svg',
           splashBackgroundColor: '#151515',
         },
       },
     }),
   },
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -68,8 +68,7 @@ export default function RootLayout({
         </Providers>
         <Toaster />
         <BackToTopButton />
-        
       </body>
     </html>
-  );
+  )
 }

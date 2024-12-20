@@ -103,7 +103,7 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
       <RemoveableQuote />
       <div className="flex flex-col sm:flex-row justify-between gap-4 xs:gap-0">
         <div className="flex gap-4">
-          <UploadImage />
+          {false && <UploadImage />}
           <EmbedLink />
           <ParentCast />
           <QuoteCast />
@@ -683,8 +683,8 @@ function RevealPhrase() {
         className="flex flex-row items-center gap-2 cursor-pointer"
         onClick={() => setEnabled(!enabled)}
       >
-        <Checkbox checked={enabled} />
-        <p className="text-sm">Reveal yourself at a later date</p>
+        {/* <Checkbox checked={enabled} />
+        <p className="text-sm">Reveal yourself at a later date</p> */}
       </div>
       {enabled && (
         <div className="flex flex-col gap-4">

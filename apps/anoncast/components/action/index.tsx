@@ -86,33 +86,32 @@ export default function ActionComponent({
               <img src="/farcaster.svg" alt="Farcaster" className="w-5 h-5 invert" />
             </a>
           </div>
-
-          <div className="flex flex-row gap-2 justify-end">
-            <a
-              href="https://dexscreener.com/base/0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
-            >
-              DEX
-            </a>
-            <a
-              href="https://app.uniswap.org/swap?outputCurrency=0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8&chain=base"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
-            >
-              Uniswap
-            </a>
-            <a
-              href="https://github.com/leovido/rumourcast"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
-            >
-              Github
-            </a>
-          </div>
+        </div>
+        <div className="flex flex-row gap-2 justify-end">
+          <a
+            href="https://dexscreener.com/base/0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
+          >
+            DEX
+          </a>
+          <a
+            href="https://app.uniswap.org/swap?outputCurrency=0x1CEcCbE4d3a19cB62DbBd09756A52Cfe5394Fab8&chain=base"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
+          >
+            Uniswap
+          </a>
+          <a
+            href="https://github.com/leovido/rumourcast"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm button-secondary px-3 py-3 rounded-full font-medium"
+          >
+            Github
+          </a>
         </div>
       </div>
       {address && !isLoading ? (
