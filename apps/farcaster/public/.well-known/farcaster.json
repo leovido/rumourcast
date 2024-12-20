@@ -1,0 +1,16 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjM4ODcsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgzMzM2MDFhODAzQ0FjMzJCN0QxN0EzOGQzMmM5NzI4QTkzYjQyMmY0In0",
+    "payload": "eyJkb21haW4iOiJmcmFtZS5hbm9uY2FzdC5vcmcifQ",
+    "signature": "MHgzOGExNGQxZmM5ZTRjYjRjNmYwMmZiM2EwNjRjYzBlODI4ZGFjOGY1ZDYwN2ViN2M0ZTdiNWQwYTdiOGNmYWY4NzUwZGQ1YjFhNTBhZDYwNGUyOWMzYWMyODIzOWRmOGMzMzE4MTQ3YmZhZWE2YjU5YWE0YmU4NjI1OGE5YzM3ODFj"
+  },
+  "frame": {
+    "name": "rumourcast",
+    "version": "0.0.1",
+    "iconUrl": "https://anoncast.org/anon.png",
+    "homeUrl": "https://frame.anoncast.org/",
+    "splashImageUrl": "https://anoncast.org/anon.png",
+    "splashBackgroundColor": "#151515",
+    "webhookUrl": "https://anoncast.org/webhook"
+  }
+}

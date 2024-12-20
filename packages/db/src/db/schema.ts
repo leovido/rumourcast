@@ -1,23 +1,107 @@
-import { integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
+import {
+  pgTable,
+  timestamp,
+  varchar,
+  uuid,
+  integer,
+  jsonb,
+  primaryKey,
+} from 'drizzle-orm/pg-core'
 
-export const signersTable = pgTable('signers', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  address: varchar({ length: 255 }).notNull().unique(),
-  signerUuid: varchar({ length: 255 }).notNull().unique(),
-  bestOfSignerUuid: varchar({ length: 255 }),
+export const actionsTable = pgTable('actions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  type: varchar({ length: 255 }).notNull(),
+  credential_id: varchar({ length: 255 })
+    .references(() => credentialsTable.id)
+    .notNull(),
+  metadata: jsonb('metadata'),
+  created_at: timestamp().notNull().defaultNow(),
+  updated_at: timestamp().notNull().defaultNow(),
 })
 
-export const postMappingTable = pgTable('post_mapping', {
-  castHash: varchar({ length: 255 }).primaryKey(),
-  tweetId: varchar({ length: 255 }),
-  bestOfHash: varchar({ length: 255 }),
+export const farcasterAccountsTable = pgTable('farcaster_accounts', {
+  fid: integer('fid').primaryKey(),
+  signer_uuid: varchar({ length: 255 }).notNull(),
+  metadata: jsonb('metadata'),
+  created_at: timestamp().notNull().defaultNow(),
+  updated_at: timestamp().notNull().defaultNow(),
 })
 
-export const postRevealTable = pgTable('post_reveal', {
-  castHash: varchar({ length: 255 }).primaryKey(),
-  revealHash: varchar({ length: 255 }),
-  revealPhrase: varchar({ length: 255 }),
-  signature: varchar({ length: 255 }),
-  address: varchar({ length: 255 }),
-  revealedAt: timestamp(),
+export const twitterAccountsTable = pgTable('twitter_accounts', {
+  username: varchar({ length: 255 }).primaryKey(),
+  metadata: jsonb('metadata'),
+  created_at: timestamp().notNull().defaultNow(),
+  updated_at: timestamp().notNull().defaultNow(),
+})
+
+export const postsTable = pgTable('posts', {
+  hash: varchar({ length: 255 }).primaryKey(),
+  fid: integer('fid')
+    .references(() => farcasterAccountsTable.fid)
+    .notNull(),
+  data: jsonb('data').notNull(),
+  reveal_hash: varchar({ length: 255 }),
+  reveal_metadata: jsonb('reveal_metadata'),
+  created_at: timestamp().notNull().defaultNow(),
+  updated_at: timestamp().notNull().defaultNow(),
+  deleted_at: timestamp(),
+})
+
+export const postRelationshipsTable = pgTable(
+  'post_relationships',
+  {
+    post_hash: varchar({ length: 255 })
+      .references(() => postsTable.hash)
+      .notNull(),
+    target: varchar({ length: 255 }).notNull(),
+    target_account: varchar({ length: 255 }).notNull(),
+    target_id: varchar({ length: 255 }).notNull(),
+    created_at: timestamp().notNull().defaultNow(),
+    updated_at: timestamp().notNull().defaultNow(),
+    deleted_at: timestamp(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.post_hash, table.target, table.target_account] }),
+  })
+)
+
+export const postCredentialsTable = pgTable('post_credentials', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  post_hash: varchar({ length: 255 })
+    .references(() => postsTable.hash)
+    .notNull(),
+  credential_id: varchar({ length: 255 })
+    .references(() => credentialsTable.id)
+    .notNull(),
+})
+
+export const actionExecutionsTable = pgTable('action_executions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  action_id: uuid('action_id')
+    .references(() => actionsTable.id)
+    .notNull(),
+  action_data: jsonb('action_data').notNull(),
+  status: varchar({ length: 255 }).notNull(),
+  error: jsonb('error'),
+  response: jsonb('response'),
+  created_at: timestamp().notNull().defaultNow(),
+  updated_at: timestamp().notNull().defaultNow(),
+})
+
+export const credentialsTable = pgTable('credentials', {
+  id: varchar({ length: 255 }).primaryKey(),
+  type: varchar({ length: 255 }).notNull(),
+  metadata: jsonb('metadata').notNull(),
+  created_at: timestamp().notNull().defaultNow(),
+  updated_at: timestamp().notNull().defaultNow(),
+})
+
+export const merkleRootsTable = pgTable('merkle_roots', {
+  root: varchar({ length: 255 }).primaryKey(),
+  credential_id: varchar({ length: 255 }).references(() => credentialsTable.id),
+  chain_id: integer('chain_id').notNull(),
+  token_address: varchar({ length: 255 }).notNull(),
+  min_balance: varchar({ length: 255 }).notNull(),
+  created_at: timestamp().notNull().defaultNow(),
+  updated_at: timestamp().notNull().defaultNow(),
 })

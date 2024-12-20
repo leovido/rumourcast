@@ -1,28 +1,25 @@
 {
-  "name": "@anon/api",
+  "name": "@anonworld/api",
   "version": "0.0.1",
   "private": true,
   "types": "./src",
   "main": "src/index.ts",
-  "files": [
-    "types",
-    "dist"
-  ],
+  "files": ["types", "dist"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
-    "start": "bun run src/index.ts"
+    "start": "bun run src/index.ts",
+    "updates": "bun run scripts/updates.ts"
   },
   "dependencies": {
-    "@anon/circuits": "*",
-    "@anon/db": "*",
-    "@anon/utils": "*",
+    "@anonworld/db": "*",
+    "@anonworld/zk": "*",
     "@elysiajs/cors": "^1.1.1",
-    "@noir-lang/backend_barretenberg": "^0.17.0",
-    "@noir-lang/noir_js": "^0.17.0",
     "elysia": "^1.1.25",
+    "https": "^1.0.0",
     "ioredis": "^5.4.1",
     "logestic": "^1.2.4",
+    "twitter-api-v2": "^1.18.2",
     "viem": "^2.21.48"
   },
   "devDependencies": {

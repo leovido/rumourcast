@@ -1,6 +1,6 @@
 # rumourcast
 
-Post anonymously to a single Farcaster
+Post anonymously to Farcaster
 
 ## Development
 

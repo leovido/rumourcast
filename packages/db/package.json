@@ -1,13 +1,10 @@
 {
-  "name": "@anon/db",
+  "name": "@anonworld/db",
   "version": "0.0.1",
   "private": true,
   "types": "./src",
   "main": "src/index.ts",
-  "files": [
-    "types",
-    "dist"
-  ],
+  "files": ["types", "dist"],
   "scripts": {
     "push": "drizzle-kit push"
   },
