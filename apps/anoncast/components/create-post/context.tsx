@@ -93,7 +93,7 @@ export const CreatePostProvider = ({
 
   const createPost = async () => {
     const data = {
-      text: 'I heard a rumour... ' + text ?? ' ',
+      text: 'I heard a rumour... ' + `${text ?? ' '}`,
       embeds: [image, embed].filter((e) => e !== null) as string[],
       quote: quote?.hash,
       channel: channel?.id,
