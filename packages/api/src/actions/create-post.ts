@@ -26,6 +26,7 @@ export class CreatePostAction {
 
   async execute() {
     const { text, embeds, quote, channel, parent, revealHash } = this.data
+    console.log('api/src/actions/create-post execute:', this.data)
 
     const response = await neynar.createCast({
       fid: this.metadata.fid,
@@ -36,6 +37,7 @@ export class CreatePostAction {
       parent,
     })
 
+    console.log('api/src/actions/create-post execute: neynarResponse', response)
     if (!response.success) {
       throw new Error('Failed to create cast')
     }
@@ -47,6 +49,7 @@ export class CreatePostAction {
       reveal_hash: this.data.revealHash,
     })
 
+    console.log('api/src/actions/create-post execute: trying createPostCredentials', this.data.roots)
     await createPostCredentials(response.cast.hash, this.data.roots)
 
     return {

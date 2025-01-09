@@ -57,6 +57,7 @@ export const CreatePostProvider = ({
   const router = useRouter()
   const { performAction, status } = usePerformAction({
     onSuccess: (response) => {
+      console.log('CreatePost success:', response)
       setText(null)
       setImage(null)
       setEmbed(null)
@@ -83,6 +84,7 @@ export const CreatePostProvider = ({
       })
     },
     onError: (error) => {
+      console.log('CreatePost error:', error)
       toast({
         variant: 'destructive',
         title: 'Failed to post',
@@ -99,6 +101,8 @@ export const CreatePostProvider = ({
       channel: channel?.id,
       parent: parent?.hash,
     }
+    
+    console.log('Attempting to create post with data:', data)
 
     await performAction(CREATE_ACTION_ID, {
       ...data,

@@ -83,15 +83,26 @@ class SimplehashService {
     minBalance,
   }: { chainId: number; tokenAddress: string; minBalance: bigint }) {
     const owners: `0x${string}`[] = []
+    console.log(`[SimplehashService] Fetching token owners for:`, {
+      chainId,
+      tokenAddress,
+      minBalance: minBalance.toString()
+    })
 
     let cursor = ''
+    let totalFetched = 0
     while (true) {
       const data = await this.getTopWalletsForFungible(chainId, tokenAddress, cursor)
+      totalFetched += data.owners.length
+      
+      console.log(`[SimplehashService] Fetched ${data.owners.length} owners (total: ${totalFetched})`)
 
       for (const owner of data.owners) {
-        if (BigInt(owner.quantity_string) >= minBalance) {
+        const balance = BigInt(owner.quantity_string)
+        if (balance >= minBalance) {
           owners.push(owner.owner_address.toLowerCase() as `0x${string}`)
         } else {
+          console.log(`[SimplehashService] Stopping at ${owners.length} qualifying holders (min balance: ${minBalance.toString()})`)
           return owners
         }
       }
