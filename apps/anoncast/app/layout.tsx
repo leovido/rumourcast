@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         action: {
           type: 'launch_frame',
           name: 'RumourCast',
-          url: 'https://frame.rumourcast.xyz',
+          url: 'https://rumourcast.xyz',
           splashImageUrl: 'https://rumourcast.xyz/logo.svg',
           splashBackgroundColor: '#151515',
         },
