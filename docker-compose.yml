@@ -1,0 +1,25 @@
+# docker-compose.yml
+services:
+  api:
+    build: .
+    command: ["bun", "run", "api:start"]
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    networks:
+      - app_network
+    volumes:
+      - ./packages/api:/app/packages/api
+      - /app/packages/api/node_modules
+    restart: unless-stopped
+
+  updates:
+    build: .
+    command: ["bun", "run", "updates"]
+    env_file:
+      - .env
+
+networks:
+  app_network:
+    driver: bridge
