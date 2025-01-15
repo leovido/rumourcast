@@ -6,7 +6,7 @@ import { Textarea } from '../ui/textarea'
 import { useCreatePost } from './context'
 import { Image, Link, Loader2, Quote, Reply, SquareSlash, X } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
-import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useRef, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -20,15 +20,24 @@ import {
 import { Input } from '../ui/input'
 import { useQuery } from '@tanstack/react-query'
 import Confetti from 'confetti-react'
-import { Checkbox } from '../ui/checkbox'
 import { useSDK } from '@anonworld/react'
 
 const MAX_EMBEDS = 2
 
 export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
   const { sdk } = useSDK()
-  const { text, setText, createPost, status, quote, setQuote, confetti, setConfetti } =
-    useCreatePost()
+  const {
+    text,
+    setText,
+    createPost,
+    status,
+    quote,
+    embed,
+    setEmbed,
+    setQuote,
+    confetti,
+    setConfetti,
+  } = useCreatePost()
 
   const length = new Blob([text ?? '']).size
 
@@ -41,6 +50,13 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
     const warpcastMatches = Array.from(e.target.value.matchAll(warpcastRegex) || []).map(
       (match) => match[0]
     )
+
+    // Check for Twitter URLs
+    const twitterRegex = /https:\/\/(twitter\.com|x\.com)\/[^/]+\/status\/\d+/g
+    const twitterMatches = Array.from(e.target.value.matchAll(twitterRegex) || []).map(
+      (match) => match[0]
+    )
+
     // Try to set quote from Warpcast URLs
     if (warpcastMatches.length > 0) {
       const currentHash = quote?.hash
@@ -55,19 +71,28 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
         })
       }
     }
+    // Handle Twitter URLs
+    if (twitterMatches.length > 0) {
+      const currentEmbed = embed
+      const twitterUrl = twitterMatches[0]
+
+      if (!currentEmbed || currentEmbed !== twitterUrl) {
+        setEmbed(twitterUrl)
+      }
+    }
   }
 
   return (
     <div className="flex flex-col gap-4">
       <RemoveableParent />
       <Textarea
-        defaultValue="I heard a rumour... "
-        text={text ?? ' '}
+        defaultValue={'I heard a rumour... '}
+        text={text ?? ''}
         onChange={handleSetText}
-        className="h-32 p-3 resize-none font-medium !text-base placeholder:text-zinc-400 bg-zinc-950 border border-zinc-700"
+        className="h-32 p-3 resize-none font-medium rounded-xl !text-base placeholder:text-zinc-400 bg-zinc-950/50 "
         placeholder={
           variant === 'post'
-            ? "What's happening, anon?"
+            ? 'I heard a rumour...'
             : 'Hey @clanker please launch a coin called "Hello" with the ticker $HI! I want this image...'
         }
       />
@@ -77,7 +102,7 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
       <RemoveableQuote />
       <div className="flex flex-col sm:flex-row justify-between gap-4 xs:gap-0">
         <div className="flex gap-4">
-          {isUploadImageAvailable && <UploadImage />}
+          {false && <UploadImage />}
           <EmbedLink />
           <ParentCast />
           <QuoteCast />
@@ -87,8 +112,8 @@ export function CreatePost({ variant }: { variant: 'post' | 'launch' }) {
           <p className="font-medium text-zinc-400">{`${length} / 320`}</p>
           <Button
             onClick={createPost}
-            className="font-bold text-base rounded-full hover:scale-105 transition-all duration-300 py-6"
-            disabled={!['idle', 'success', 'error'].includes(state.status)}
+            className="font-bold text-lg px-4 py-6 rounded-full hover:scale-105 transition-all duration-300"
+            disabled={!['idle', 'success', 'error'].includes(status.status)}
           >
             {status.status === 'loading' ? (
               <div className="flex flex-row items-center gap-2">
@@ -238,7 +263,7 @@ function UploadImage() {
         tooltip="Upload image"
         onClick={() => fileInputRef.current?.click()}
         disabled={loading || !!image || embedCount >= MAX_EMBEDS}
-        className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+        className="w-full sm:w-auto min-w-10 bg-zinc-950"
       >
         <input
           ref={fileInputRef}
@@ -297,7 +322,7 @@ function EmbedLink() {
         <TooltipButton
           tooltip="Embed link"
           disabled={!!embed || embedCount >= MAX_EMBEDS}
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950"
         >
           <Link />
         </TooltipButton>
@@ -350,7 +375,7 @@ function RemoveableEmbed() {
   return (
     <div className="relative">
       <div
-        className="w-full border rounded-xl overflow-hidden cursor-pointer"
+        className="w-full rounded-xl overflow-hidden cursor-pointer"
         onClick={() => window.open(embed, '_blank')}
       >
         {image && (
@@ -400,7 +425,7 @@ function ParentCast() {
         <TooltipButton
           tooltip="Reply to post"
           disabled={!!parent}
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950"
         >
           <Reply />
         </TooltipButton>
@@ -474,19 +499,20 @@ function Channel() {
   const { sdk } = useSDK()
   const { setChannel, channel } = useCreatePost()
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState(channel?.id ?? 'rumours')
+  const [value, setValue] = useState(channel?.id ?? '')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleSetChannel = useCallback(async () => {
+  const handleSetChannel = async () => {
     if (!value) {
+      // clearing the channel
       setChannel(null)
       setOpen(false)
       return
     }
 
     setLoading(true)
-    setError(null)
+    setError(null) // Clear any previous error
     try {
       const data = await sdk.getFarcasterChannel(value.replace('/', ''))
       if (!data.data) {
@@ -501,31 +527,20 @@ function Channel() {
     } finally {
       setLoading(false)
     }
-  }, [value, setChannel])
-
-  useEffect(() => {
-    const timeoutId = setTimeout(async () => {
-      if (value !== channel?.id) {
-        await handleSetChannel()
-      }
-    }, 500)
-
-    return () => clearTimeout(timeoutId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <TooltipButton
           tooltip="Channel"
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950"
         >
           {channel ? (
             <img
               src={channel.image_url}
               alt={channel.name}
-              className="rounded-full w-full h-full object-cover"
+              className="rounded-xl w-full h-full object-cover"
             />
           ) : (
             <SquareSlash />
@@ -542,7 +557,7 @@ function Channel() {
             id="channel"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="rumours"
+            placeholder="memes"
           />
           {error && <p className="text-red-500">{error}</p>}
         </div>
@@ -583,7 +598,7 @@ function QuoteCast() {
         <TooltipButton
           tooltip="Quote post"
           disabled={!!quote || embedCount >= MAX_EMBEDS}
-          className="w-full sm:w-auto min-w-10 bg-zinc-950 border border-zinc-700"
+          className="w-full sm:w-auto min-w-10 bg-zinc-950"
         >
           <Quote />
         </TooltipButton>
@@ -591,14 +606,16 @@ function QuoteCast() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Quote post</DialogTitle>
-          <DialogDescription>You can quote posts from Warpcast.</DialogDescription>
+          <DialogDescription>
+            You can quote posts from Warpcast or X/Twitter.
+          </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col  gap-4 py-4">
           <Input
             id="quote"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="https://warpcast.com/..."
+            placeholder="https://warpcast.com/..., https://x.com/..."
           />
         </div>
         <DialogFooter>
@@ -665,8 +682,8 @@ function RevealPhrase() {
         className="flex flex-row items-center gap-2 cursor-pointer"
         onClick={() => setEnabled(!enabled)}
       >
-        <Checkbox checked={enabled} />
-        <p className="text-sm">Reveal yourself at a later date</p>
+        {/* <Checkbox checked={enabled} />
+        <p className="text-sm">Reveal yourself at a later date</p> */}
       </div>
       {enabled && (
         <div className="flex flex-col gap-4">

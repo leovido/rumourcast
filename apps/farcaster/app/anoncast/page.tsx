@@ -6,7 +6,7 @@ import { CreatePostProvider, useCreatePost } from '@/components/create-post/cont
 
 export default function Home() {
   return (
-    <CreatePostProvider>
+    <CreatePostProvider initialVariant="anoncast">
       <Inner />
     </CreatePostProvider>
   )

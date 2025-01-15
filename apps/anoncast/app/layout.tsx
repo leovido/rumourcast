@@ -21,11 +21,11 @@ export const metadata: Metadata = {
       version: 'next',
       imageUrl: 'apps/farcaster/public/icon192.png',
       button: {
-        title: 'Post rumours..',
+        title: 'Post rumours.. test 1',
         action: {
           type: 'launch_frame',
           name: 'RumourCast',
-          url: 'https://rumourcast.xyz',
+          url: 'https://rumourcast-frame.vercel.app/',
           splashImageUrl: 'apps/farcaster/public/icon192.png',
           splashBackgroundColor: '#151515',
         },
