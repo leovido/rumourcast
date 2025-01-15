@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 
 const WagmiProvider = dynamic(
-  () => import('~/components/providers/WagmiProvider'),
+  () => import('/components/providers/WagmiProvider'),
   {
     ssr: false,
   }
