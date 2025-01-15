@@ -12,6 +12,7 @@ export default function Home() {
   )
 }
 
+
 function Inner() {
   const { variant } = useCreatePost()
   return (
