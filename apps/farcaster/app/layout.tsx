@@ -5,12 +5,12 @@ import { Providers } from '@/components/providers'
 import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
-  title: 'RumourCast',
+  title: 'anoncast',
   description: 'Post anonymously to Farcaster.',
   openGraph: {
-    title: 'RumourCast',
-    description: 'Post rumours to Farcaster.',
-    images: ['apps/farcaster/public/icon192.png'],
+    title: 'anoncast',
+    description: 'Post anonymously to Farcaster.',
+    images: ['/anon.png'],
   },
 }
 
@@ -21,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${GeistSans.className} antialiased min-h-screen w-full`}>
+      <body
+        className={`${GeistSans.className} antialiased min-h-screen w-full bg-background`}
+      >
         <Providers>{children}</Providers>
         <Toaster />
       </body>
