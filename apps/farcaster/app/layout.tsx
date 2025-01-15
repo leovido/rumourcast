@@ -10,10 +10,14 @@ import HamburgerMenuButton from '@/components/ui/hamburger-menu-button'
 
 
 export const metadata: Metadata = {
-  title: "Yoink!",
-  description: "Click to yoink the flag.",
-};
-
+  title: 'anoncast',
+  description: 'Post anonymously to Farcaster.',
+  openGraph: {
+    title: 'anoncast',
+    description: 'Post anonymously to Farcaster.',
+    images: ['/anon.png'],
+  },
+}
 
 export default function RootLayout({
   children,
