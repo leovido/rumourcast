@@ -9,28 +9,12 @@ import BackToTopButton from '@/components/ui/back-to-top-button'
 import HamburgerMenuButton from '@/components/ui/hamburger-menu-button'
 
 export const metadata: Metadata = {
-  title: 'Rumourcast',
-  description: 'Spread rumours anonymously to Farcaster.',
+  title: 'anoncast',
+  description: 'Post anonymously to Farcaster.',
   openGraph: {
-    title: 'Rumourcast',
-    description: 'Spread rumours anonymously to Farcaster.',
-    images: ['/rumour.webp'],
-  },
-  other: {
-    ['fc:frame']: JSON.stringify({
-      version: 'next',
-      imageUrl: 'apps/farcaster/public/icon192.png',
-      button: {
-        title: 'Post rumours..',
-        action: {
-          type: 'launch_frame',
-          name: 'RumourCast',
-          url: 'https://rumourcast.xyz',
-          splashImageUrl: 'apps/farcaster/public/icon192.png',
-          splashBackgroundColor: '#151515',
-        },
-      },
-    }),
+    title: 'anoncast',
+    description: 'Post anonymously to Farcaster.',
+    images: ['/anon.png'],
   },
 }
 
