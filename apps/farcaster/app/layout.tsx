@@ -5,12 +5,12 @@ import { Providers } from '@/components/providers'
 import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
-  title: 'anoncast',
+  title: 'RumourCast',
   description: 'Post anonymously to Farcaster.',
   openGraph: {
-    title: 'anoncast',
-    description: 'Post anonymously to Farcaster.',
-    images: ['/anon.png'],
+    title: 'RumourCast',
+    description: 'Post rumours to Farcaster.',
+    images: ['apps/farcaster/public/icon192.png'],
   },
 }
 

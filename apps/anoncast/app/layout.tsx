@@ -19,14 +19,14 @@ export const metadata: Metadata = {
   other: {
     ['fc:frame']: JSON.stringify({
       version: 'next',
-      imageUrl: 'https://rumourcast.xyz/logo.svg',
+      imageUrl: 'apps/farcaster/public/icon192.png',
       button: {
-        title: 'Post rumours',
+        title: 'Post rumours..',
         action: {
           type: 'launch_frame',
           name: 'RumourCast',
           url: 'https://rumourcast.xyz',
-          splashImageUrl: 'https://rumourcast.xyz/logo.svg',
+          splashImageUrl: 'apps/farcaster/public/icon192.png',
           splashBackgroundColor: '#151515',
         },
       },
