@@ -5,9 +5,9 @@ import { Cast, Channel } from '@anonworld/react'
 import { useRouter } from 'next/navigation'
 import { createContext, useContext, useState, ReactNode } from 'react'
 import { hashMessage } from 'viem'
+import { ToastAction } from '../ui/toast'
 import { CREATE_ACTION_ID } from '@/lib/utils'
 import { PerformActionStatus, usePerformAction } from '@anonworld/react'
-import sdk from '@farcaster/frame-sdk'
 
 interface CreatePostContextProps {
   text: string | null
@@ -57,8 +57,30 @@ export const CreatePostProvider = ({
   const router = useRouter()
   const { performAction, status } = usePerformAction({
     onSuccess: (response) => {
-      sdk.actions.openUrl(`https://warpcast.com/~/conversations/${response.hash}`)
-      sdk.actions.close()
+      setText(null)
+      setImage(null)
+      setEmbed(null)
+      setQuote(null)
+      setChannel(null)
+      setParent(null)
+      setRevealPhrase(null)
+      setConfetti(true)
+      toast({
+        title: 'Post created',
+        action: (
+          <ToastAction
+            altText="View post"
+            onClick={() => {
+              window.open(
+                `https://warpcast.com/~/conversations/${response.hash}`,
+                '_blank'
+              )
+            }}
+          >
+            View on Warpcast
+          </ToastAction>
+        ),
+      })
     },
     onError: (error) => {
       toast({
@@ -71,7 +93,7 @@ export const CreatePostProvider = ({
 
   const createPost = async () => {
     const data = {
-      text: text ?? undefined,
+      text: 'I heard a rumour... ' + `${text ?? ' '}`,
       embeds: [image, embed].filter((e) => e !== null) as string[],
       quote: quote?.hash,
       channel: channel?.id,
