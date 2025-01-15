@@ -10,30 +10,10 @@ import HamburgerMenuButton from '@/components/ui/hamburger-menu-button'
 
 
 export const metadata: Metadata = {
-  title: 'Rumourcast',
-  description: 'Spread rumours anonymously to Farcaster.',
-  openGraph: {
-    title: 'Rumourcast',
-    description: 'Spread rumours anonymously to Farcaster.',
-    images: ['/rumour.webp'],
-  },
-  other: {
-    ['fc:frame']: JSON.stringify({
-      version: 'next',
-      imageUrl: '/banner.png',
-      button: {
-        title: 'Post rumours',
-        action: {
-          type: 'launch_frame',
-          name: 'RumourCast',
-          url: 'https://rumourcast.xyz',
-          splashImageUrl: '/anon.png',
-          splashBackgroundColor: '#151515',
-        },
-      },
-    }),
-  },
-}
+  title: 'Farcaster Frames v2 Demo',
+  description: 'A Farcaster Frames v2 demo app',
+};
+
 
 export default function RootLayout({
   children,
