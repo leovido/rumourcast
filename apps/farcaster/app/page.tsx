@@ -1,21 +1,9 @@
 'use client'
-import type { Metadata } from 'next'
+
 import ActionComponent from '@/components/action'
 import { PostFeed, PromotedFeed } from '@/components/post-feed'
 import { CreatePostProvider, useCreatePost } from '@/components/create-post/context'
 
- const metadata: Metadata = {
-  title: 'anoncast',
-  description: 'Post anonymously to Farcaster.',
-  openGraph: {
-    title: 'anoncast',
-    description: 'Post anonymously to Farcaster.',
-    images: ['/anon.png'],
-  },
-  other: {
-    
-      },
-    }
 
 export default function Home() {
   return (
@@ -24,8 +12,6 @@ export default function Home() {
     </CreatePostProvider>
   )
 }
-
-
 
 function Inner() {
   const { variant } = useCreatePost()
