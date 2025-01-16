@@ -180,4 +180,10 @@ export class Api {
       isFormData: true,
     })
   }
+
+  async invalidateCredentialCache(credentialId: string) {
+    return await this.request(`/merkle-tree/${credentialId}/invalidate`, {
+      method: 'POST'
+    })
+  }
 }

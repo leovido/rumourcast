@@ -34,9 +34,11 @@ export const merkleTreeRoutes = createElysia({ prefix: '/merkle-tree' })
     async ({ params }) => {
       const cached = await redis.getMerkleTreeForCredential(params.credentialId)
       if (cached) {
+        console.log('merkle-tree.ts /:credentialId using cached result')
         return JSON.parse(cached)
       }
 
+      console.log('querying DB for credentialID', params.credentialId);
       const credential = await getCredential(params.credentialId)
       if (!credential) {
         throw new Error('Credential not found')

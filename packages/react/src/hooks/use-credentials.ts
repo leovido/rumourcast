@@ -40,7 +40,19 @@ export function useCredentials(sdk: AnonWorldSDK) {
     if (!address) return
 
     try {
-      const signature = await signMessageAsync({ message: credentialId })
+      console.log('Requesting signature for credential:', credentialId)
+      const signature = await signMessageAsync({ 
+        message: credentialId 
+      }).catch(error => {
+        console.error('Signature request failed:', error)
+        throw new Error('Failed to get wallet signature')
+      })
+
+      if (!signature) {
+        throw new Error('No signature received')
+      }
+  
+      console.log('Got signature, verifying credential...')
       const proof = await sdk.verifyCredential(credentialId, {
         address,
         signature,
