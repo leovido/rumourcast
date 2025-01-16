@@ -1,16 +1,18 @@
 {
   "accountAssociation": {
-    "header": "eyJmaWQiOjg4MDA5NCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDlBM2JFMjk0MzdFNzI5MTQ5QzIxMjI4RDcyQjcwRDk5MDI3Njc3NjcifQ",
-    "payload": "eyJkb21haW4iOiJhbm9uY2FzdC5vcmcifQ",
-    "signature": "MHg5OTI5MGE1MDRlOGIwZmViNGExZjBhYzg0YTc3ZWVmOTI3YmE5OGYwZmM0MTQ1ZTFmMWYxMDllNGE5MmE0M2Q3MWUyOTk2NGViYjAwMWE4NWZjZGQzN2I0Y2JiMDNiYTAyYmMwMDk0OTVjYjUzOWFkOTg4OGZjODYzYzFlOWVjNDFj"
+    "header": "eyJmaWQiOjM4OTgwOCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDFDODdFMjdGOWQ5RDczZTAyNDEwQjAwQzE5NmVBNjQwNzk1REYxZDIifQ",
+    "payload": "eyJkb21haW4iOiJydW1vdXJjYXN0Lnh5eiJ9",
+    "signature": "MHgzMmUzNjdjNGU0MGM2NWQxZjNkNDMxNTA2MWExOGM4ZjliNWRiYzVmOTM0NTY0YzM3OWNjM2NiOGZhNWU4NGE5MmE1ODZlMGExMmQ0ODU1NDQ0YTk4YzhmZjA0NjNkNjExZDFkNTE3ZjE1MWIyZmNkOGM4N2UwMzc0MjVkNzIyNDFi"
   },
   "frame": {
-    "name": "anoncast",
-    "version": "0.0.1",
-    "iconUrl": "https://anoncast.org/anon.png",
-    "homeUrl": "https://frame.anoncast.org/",
-    "splashImageUrl": "https://anoncast.org/anon.png",
-    "splashBackgroundColor": "#151515",
-    "webhookUrl": "https://anoncast.org/webhook"
+    "version": "1",
+    "name": "RumourCast",
+    "iconUrl": "https://i.postimg.cc/YCj2rxMz/icon512-maskable.png",
+    "homeUrl": "https://rumourcast-frame.vercel.app/",
+    "imageUrl": "https://rumourcast.xyz/logo.svg",
+    "buttonTitle": "I heard a rumour..",
+    "splashImageUrl": "https://rumourcast.xyz/banner.png",
+    "splashBackgroundColor": "#eeccff",
+    "webhookUrl": "https://rumourcast.xyz/webhook"
   }
 }
