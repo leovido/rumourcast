@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   other: {
     ['fc:frame']: JSON.stringify({
       version: 'next',
-      imageUrl: 'https://rumourcast.xyz/logo.svg',
+      imageUrl: 'https://i.postimg.cc/qqd4PSp5/placeholder-frame-image.png',
       button: {
         title: 'Post rumours',
         action: {
