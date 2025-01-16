@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Rumourcast',
     description: 'Spread rumours anonymously to Farcaster.',
-    images: ['/rumour.webp'],
+    images: ['/icon192.png'],
   },
   other: {
     ['fc:frame']: JSON.stringify({
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         action: {
           type: 'launch_frame',
           name: 'RumourCast',
-          url: 'https://rumourcast.xyz',
+          url: 'https://rumourcast-frame.vercel.app/',
           splashImageUrl: 'https://rumourcast.xyz/logo.svg',
           splashBackgroundColor: '#151515',
         },
