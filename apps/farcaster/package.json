@@ -40,9 +40,7 @@
     "tailwindcss-animate": "^1.0.7",
     "viem": "^2.21.53",
     "wagmi": "^2.13.3",
-    "webpack": "^5.96.1",
-    "next-pwa": "^5.6.0"
-    
+    "webpack": "^5.96.1"
   },
   "devDependencies": {
     "@types/node": "^20",
