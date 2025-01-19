@@ -24,7 +24,7 @@ export const createElysia = (config?: ConstructorParameters<typeof Elysia>[0]) =
       port: 3001,
       hostname: '0.0.0.0', // Allow external connections
       development: process.env.NODE_ENV !== 'production',
-      idleTimeout: 10000, // 10 seconds timeout
+      idleTimeout: 10, // 10 seconds timeout (must be <= 255)
     })
 
 export const augmentCasts = async (casts: Cast[]) => {
