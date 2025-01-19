@@ -11,7 +11,19 @@ import { getBulkPosts } from '@anonworld/db'
 
 export const createElysia = (config?: ConstructorParameters<typeof Elysia>[0]) =>
   new Elysia(config)
-    .use(cors())
+    .use(cors({
+      origin: [
+        'https://rumourcast.xyz', 
+        'https://api.rumourcast.xyz',
+        'https://api2.rumourcast.xyz',
+        /^https:\/\/.*--rumourcast\.vercel\.app$/  // Allow all Vercel preview URLs
+      ],
+      credentials: true,
+      allowedHeaders: ['content-type'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      preflight: true,
+      maxAge: 5 * 60 // Cache preflight requests for 5 minutes
+    }))
     .use(Logestic.preset('common'))
     .onError(({ server, error, path }) => {
       console.error(path, error)
