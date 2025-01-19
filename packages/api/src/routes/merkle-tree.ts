@@ -32,36 +32,46 @@ export const merkleTreeRoutes = createElysia({ prefix: '/merkle-tree' })
   .get(
     '/:credentialId',
     async ({ params }) => {
-      console.log('[merkle-tree] Requesting credential:', params.credentialId)
-      
-      const cached = await redis.getMerkleTreeForCredential(params.credentialId)
-      if (cached) {
-        console.log('[merkle-tree] Using cached result')
-        return JSON.parse(cached)
+      try {
+        console.log('[merkle-tree] Requesting credential:', params.credentialId)
+        
+        const cached = await redis.getMerkleTreeForCredential(params.credentialId)
+        if (cached) {
+          console.log('[merkle-tree] Using cached result')
+          return JSON.parse(cached)
+        }
+
+        console.log('[merkle-tree] Cache miss, querying DB')
+        const credential = await getCredential(params.credentialId)
+        console.log('[merkle-tree] DB result:', credential)
+        
+        if (!credential) {
+          console.log('[merkle-tree] Credential not found:', params.credentialId)
+          throw new Error(`Credential not found: ${params.credentialId}`)
+        }
+
+        const { chainId, tokenAddress, minBalance } = credential.metadata as {
+          chainId: number
+          tokenAddress: string
+          minBalance: string
+        }
+
+        console.log('[merkle-tree] Building tree with params:', { chainId, tokenAddress, minBalance })
+        const startTime = Date.now()
+        
+        const tree = await buildMerkleTree({
+          chainId,
+          tokenAddress,
+          minBalance: BigInt(minBalance),
+          credentialId: credential.id,
+        })
+
+        console.log('[merkle-tree] Tree built in', Date.now() - startTime, 'ms')
+        return tree
+      } catch (error) {
+        console.error('[merkle-tree] Error:', error)
+        throw error
       }
-
-      console.log('[merkle-tree] Cache miss, querying DB')
-      const credential = await getCredential(params.credentialId)
-      console.log('[merkle-tree] DB result:', credential)
-      
-      if (!credential) {
-        throw new Error(`Credential not found: ${params.credentialId}`)
-      }
-
-      const { chainId, tokenAddress, minBalance } = credential.metadata as {
-        chainId: number
-        tokenAddress: string
-        minBalance: string
-      }
-
-      const tree = await buildMerkleTree({
-        chainId,
-        tokenAddress,
-        minBalance: BigInt(minBalance),
-        credentialId: credential.id,
-      })
-
-      return tree
     },
     {
       params: t.Object({
