@@ -6,6 +6,14 @@ export class RedisService {
 
   private constructor(url: string) {
     this.client = new Redis(url)
+    
+    this.client.on('error', (error) => {
+      console.error('[Redis] Connection error:', error)
+    })
+
+    this.client.on('connect', () => {
+      console.log('[Redis] Connected successfully')
+    })
   }
 
   static getInstance(): RedisService {

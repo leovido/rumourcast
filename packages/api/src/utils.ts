@@ -20,6 +20,12 @@ export const createElysia = (config?: ConstructorParameters<typeof Elysia>[0]) =
         process.exit(1)
       }
     })
+    .listen({
+      port: 3001,
+      hostname: '0.0.0.0', // Allow external connections
+      development: process.env.NODE_ENV !== 'production',
+      idleTimeout: 10000, // 10 seconds timeout
+    })
 
 export const augmentCasts = async (casts: Cast[]) => {
   const hashes = casts.map((cast) => cast.hash)
