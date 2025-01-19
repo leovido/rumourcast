@@ -35,13 +35,13 @@ export const merkleTreeRoutes = createElysia({ prefix: '/merkle-tree' })
       try {
         console.log('[merkle-tree] Requesting credential:', params.credentialId)
         
-        const cached = await redis.getMerkleTreeForCredential(params.credentialId)
-        if (cached) {
-          console.log('[merkle-tree] Using cached result')
-          return JSON.parse(cached)
-        }
+        // const cached = await redis.getMerkleTreeForCredential(params.credentialId)
+        // if (cached) {
+        //   console.log('[merkle-tree] Using cached result')
+        //   return JSON.parse(cached)
+        // }
 
-        console.log('[merkle-tree] Cache miss, querying DB')
+        // console.log('[merkle-tree] Cache miss, querying DB')
         const credential = await getCredential(params.credentialId)
         console.log('[merkle-tree] DB result:', credential)
         
