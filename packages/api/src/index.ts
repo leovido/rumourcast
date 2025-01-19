@@ -7,6 +7,17 @@ import { uploadRoutes } from './routes/upload'
 import { farcasterRoutes } from './routes/farcaster'
 
 const app = createElysia()
+  .onError(({ code, error, set }) => {
+    console.error(`[error] ${code}:`, error)
+    
+    if (code === 'NOT_FOUND') {
+      set.status = 404
+      return { error: 'Not Found' }
+    }
+
+    set.status = 500
+    return { error: 'Internal Server Error' }
+  })
   .use(actionsRoutes)
   .use(merkleTreeRoutes)
   .use(postsRoutes)
