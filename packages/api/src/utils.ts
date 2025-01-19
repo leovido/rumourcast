@@ -19,24 +19,24 @@ export const createElysia = (config?: ConstructorParameters<typeof Elysia>[0]) =
         /^https:\/\/.*--rumourcast\.vercel\.app$/  // Allow all Vercel preview URLs
       ],
       credentials: true,
-      allowedHeaders: ['content-type'],
+      allowedHeaders: ['content-type', 'x-forwarded-proto'],
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       preflight: true,
       maxAge: 5 * 60 // Cache preflight requests for 5 minutes
     }))
-    .use(Logestic.preset('common'))
-    .onError(({ server, error, path }) => {
-      console.error(path, error)
-      if (error.message.includes('Out of memory')) {
-        server?.stop()
-        process.exit(1)
-      }
+    .onRequest(({ request }) => {
+      // Log the protocol being used
+      console.log('[request]', {
+        url: request.url,
+        proto: request.headers.get('x-forwarded-proto'),
+        host: request.headers.get('host')
+      })
     })
     .listen({
       port: 3001,
-      hostname: '0.0.0.0', // Allow external connections
+      hostname: '0.0.0.0',
       development: process.env.NODE_ENV !== 'production',
-      idleTimeout: 10, // 10 seconds timeout (must be <= 255)
+      idleTimeout: 10,
     })
 
 export const augmentCasts = async (casts: Cast[]) => {
