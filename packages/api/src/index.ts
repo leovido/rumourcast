@@ -1,5 +1,5 @@
-import { Elysia, cors } from 'elysia'
-import { createElysia } from './utils'
+import { Elysia } from 'elysia'
+import cors from '@elysiajs/cors'
 import { actionsRoutes } from './routes/actions'
 import { merkleTreeRoutes } from './routes/merkle-tree'
 import { postsRoutes } from './routes/posts'
