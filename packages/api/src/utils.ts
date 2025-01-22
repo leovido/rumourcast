@@ -13,16 +13,29 @@ export const createElysia = (config?: ConstructorParameters<typeof Elysia>[0]) =
   new Elysia(config)
     .use(
       cors({
-        origin: [
-          'https://rumourcast.xyz',
-          'https://api-new.rumourcast.xyz',
-          'http://localhost:3000', // For local development
-          /\.rumourcast\.xyz$/, // Allow all subdomains
+        origin: (request: Request): boolean => {
+          const origin = request.headers.get('origin')
+          return (
+            origin === 'https://rumourcast.xyz' ||
+            origin === 'https://api-new.rumourcast.xyz' ||
+            origin === 'http://localhost:3000' ||
+            (origin?.endsWith('.rumourcast.xyz') ?? false)
+          )
+        },
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
+        credentials: true,
+        allowedHeaders: [
+          'Content-Type',
+          'Authorization',
+          'Accept',
+          'Origin',
+          'X-Requested-With',
         ],
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-        credentials: true, // If you need to send cookies/auth headers
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        exposeHeaders: ['Access-Control-Allow-Origin'],
+        exposeHeaders: [
+          'Access-Control-Allow-Origin',
+          'Access-Control-Allow-Credentials',
+        ],
+        maxAge: 86400, // 24 hours
         preflight: true,
       })
     )
