@@ -57,4 +57,4 @@ ENV PATH="/usr/local/bin:${PATH}"
 EXPOSE 3001
 
 # The actual command will be specified in docker-compose.yml
-CMD ["bun", "run", "api:start"]
+CMD ["bun", "run", "start"]
