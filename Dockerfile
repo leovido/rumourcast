@@ -56,5 +56,5 @@ ENV PATH="/usr/local/bin:${PATH}"
 # Expose the port
 EXPOSE 3001
 
-WORKDIR /app/packages/api  # Change working directory to the API app
-CMD ["bun", "run", "start"]  # Run the start script directly
+WORKDIR /app/apps/api  # Change working directory to the API app
+CMD bun run start # Run the start script directly
