@@ -14,6 +14,9 @@ const app = createElysia()
   .use(uploadRoutes)
   .use(farcasterRoutes)
 
-app.listen(3001)
+app.listen({
+  port: process.env.PORT || 3001,
+  hostname: '0.0.0.0',
+})
 
 console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`)
