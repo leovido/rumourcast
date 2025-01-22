@@ -1,5 +1,5 @@
 # Use the official Bun image
-FROM --platform=linux/amd64 oven/bun:1.0.21
+FROM --platform=linux/amd64 oven/bun:1.1.38
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -56,5 +56,4 @@ ENV PATH="/usr/local/bin:${PATH}"
 # Expose the port
 EXPOSE 3001
 
-WORKDIR /app/apps/api  # Change working directory to the API app
-CMD bun run start # Run the start script directly
+CMD ["bun", "run", "api:start"]
