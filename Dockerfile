@@ -14,12 +14,12 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y curl build-essential && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
     . "$HOME/.cargo/env" && \
-    # Install Nargo v0.38.0 with architecture detection
+    # Install Nargo v0.39.0 with architecture detection
     ARCH=$(uname -m) && \
     if [ "$ARCH" = "aarch64" ]; then \
-        GITHUB_URL="https://github.com/noir-lang/noir/releases/download/v0.38.0/nargo-aarch64-apple-darwin.tar.gz"; \
+        GITHUB_URL="https://github.com/noir-lang/noir/releases/download/v0.39.0/nargo-aarch64-apple-darwin.tar.gz"; \
     else \
-    GITHUB_URL="https://github.com/noir-lang/noir/releases/download/v0.38.0/nargo-x86_64-unknown-linux-gnu.tar.gz"; \
+        GITHUB_URL="https://github.com/noir-lang/noir/releases/download/v0.39.0/nargo-x86_64-unknown-linux-gnu.tar.gz"; \
     fi && \
     curl -L "${GITHUB_URL}" -o nargo.tar.gz && \
     tar -xzf nargo.tar.gz && \
