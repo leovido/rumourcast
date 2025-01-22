@@ -1,4 +1,4 @@
-import cors from '@elysiajs/cors'
+import { cors } from '@elysiajs/cors'
 import { Elysia } from 'elysia'
 import { Logestic } from 'logestic'
 import { Cast } from './services/neynar/types'
