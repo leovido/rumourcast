@@ -2,7 +2,7 @@
 services:
   api:
     build: .
-    command: ["bun", "run", "api:start"]
+    command: ["bun", "run", "start"]
     ports:
       - "3001:3001"
     env_file:
