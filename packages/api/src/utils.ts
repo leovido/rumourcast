@@ -11,7 +11,18 @@ import { getBulkPosts } from '@anonworld/db'
 
 export const createElysia = (config?: ConstructorParameters<typeof Elysia>[0]) =>
   new Elysia(config)
-    .use(cors())
+    .use(
+      cors({
+        origin: [
+          'https://rumourcast.xyz',
+          'http://localhost:3000', // For local development
+          /\.rumourcast\.xyz$/, // Allow all subdomains
+        ],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        credentials: true, // If you need to send cookies/auth headers
+        allowedHeaders: ['Content-Type', 'Authorization'],
+      })
+    )
     .use(Logestic.preset('common'))
     .onError(({ server, error, path }) => {
       console.error(path, error)
