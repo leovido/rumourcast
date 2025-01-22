@@ -10,13 +10,16 @@ import {
 import { getBulkPosts } from '@anonworld/db'
 
 export const createElysia = (config?: ConstructorParameters<typeof Elysia>[0]) =>
-  new Elysia(config).use(Logestic.preset('common')).onError(({ server, error, path }) => {
-    console.error(path, error)
-    if (error.message.includes('Out of memory')) {
-      server?.stop()
-      process.exit(1)
-    }
-  })
+  new Elysia(config)
+    .use(cors())
+    .use(Logestic.preset('common'))
+    .onError(({ server, error, path }) => {
+      console.error(path, error)
+      if (error.message.includes('Out of memory')) {
+        server?.stop()
+        process.exit(1)
+      }
+    })
 
 export const augmentCasts = async (casts: Cast[]) => {
   const hashes = casts.map((cast) => cast.hash)

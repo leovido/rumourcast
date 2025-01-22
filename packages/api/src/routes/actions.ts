@@ -12,9 +12,10 @@ export const actionsRoutes = createElysia({ prefix: '/actions' }).post(
       proof: new Uint8Array(proof.proof),
       publicInputs: proof.publicInputs,
     }))
-    const action = await getAction(body.actionId, proofs, body.data)
 
     try {
+      const action = await getAction(body.actionId, proofs, body.data)
+
       const response = await action.execute()
 
       await logActionExecution({
