@@ -15,12 +15,15 @@ export const createElysia = (config?: ConstructorParameters<typeof Elysia>[0]) =
       cors({
         origin: [
           'https://rumourcast.xyz',
+          'https://api-new.rumourcast.xyz',
           'http://localhost:3000', // For local development
           /\.rumourcast\.xyz$/, // Allow all subdomains
         ],
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         credentials: true, // If you need to send cookies/auth headers
         allowedHeaders: ['Content-Type', 'Authorization'],
+        exposeHeaders: ['Access-Control-Allow-Origin'],
+        preflight: true,
       })
     )
     .use(Logestic.preset('common'))
