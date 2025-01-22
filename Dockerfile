@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     python3 \
     make \
-    tar
+    tar \
+    git
 
 # Install Rust and Nargo dependencies - Updated for ARM compatibility
 RUN apt-get update && apt-get install -y curl build-essential && \
