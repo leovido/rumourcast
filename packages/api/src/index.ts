@@ -10,23 +10,26 @@ import { farcasterRoutes } from './routes/farcaster'
 const app = new Elysia()
   .use(
     cors({
-      origin: [
-        'https://rumourcast.xyz',
-        'http://localhost:3000',
-        'https://www.rumourcast.xyz',
-        'http://rumourcast.xyz',
-        'https://rumourcast.xyz',
-        /\.rumourcast\.xyz$/, // This will match all subdomains
-      ],
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+      origin: (request: Request): boolean => {
+        const origin = request.headers.get('origin')
+        return (
+          origin === 'https://rumourcast.xyz' ||
+          origin === 'https://api-new.rumourcast.xyz' ||
+          origin === 'http://localhost:3000' ||
+          (origin?.endsWith('.rumourcast.xyz') ?? false)
+        )
+      },
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
       credentials: true,
-      allowHeaders: [
+      allowedHeaders: [
         'Content-Type',
         'Authorization',
-        'Access-Control-Allow-Origin',
-        'Access-Control-Allow-Credentials',
+        'Accept',
+        'Origin',
+        'X-Requested-With',
       ],
-      exposedHeaders: ['*'],
+      exposeHeaders: ['Access-Control-Allow-Origin', 'Access-Control-Allow-Credentials'],
+      maxAge: 86400, // 24 hours
       preflight: true,
     })
   )
