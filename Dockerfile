@@ -56,4 +56,4 @@ ENV PATH="/usr/local/bin:${PATH}"
 # Expose the port
 EXPOSE 3001
 
-CMD ["bun", "run", "api:start"]
+CMD bun run zk:build && bun run api:start
