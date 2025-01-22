@@ -56,5 +56,5 @@ ENV PATH="/usr/local/bin:${PATH}"
 # Expose the port
 EXPOSE 3001
 
-# The actual command will be specified in docker-compose.yml
-CMD ["bun", "run", "api:start"]
+WORKDIR /app/packages/api  # Change working directory to the API app
+CMD ["bun", "run", "start"]  # Run the start script directly
