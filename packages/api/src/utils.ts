@@ -17,6 +17,7 @@ export const createElysia = (config?: ConstructorParameters<typeof Elysia>[0]) =
           const origin = request.headers.get('origin')
           return (
             origin === 'https://rumourcast.xyz' ||
+            origin === 'https://www.rumourcast.xyz' || // Added www subdomain
             origin === 'https://api-new.rumourcast.xyz' ||
             origin === 'http://localhost:3000' ||
             (origin?.endsWith('.rumourcast.xyz') ?? false)
@@ -34,6 +35,8 @@ export const createElysia = (config?: ConstructorParameters<typeof Elysia>[0]) =
         exposeHeaders: [
           'Access-Control-Allow-Origin',
           'Access-Control-Allow-Credentials',
+          'Access-Control-Allow-Methods', // Added this
+          'Access-Control-Allow-Headers', // Added this
         ],
         maxAge: 86400, // 24 hours
         preflight: true,
