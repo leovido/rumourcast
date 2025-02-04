@@ -40,7 +40,7 @@ export class RedisService {
   }
 
   async setMerkleTree(key: string, tree: string) {
-    await this.client.set(key, tree)
+    await this.client.setex(key, 600, tree)
   }
 
   async getMerkleTreeForCredential(credentialId: string) {
@@ -49,7 +49,7 @@ export class RedisService {
 
   async setMerkleTreeForCredential(credentialId: string, tree: string) {
     const key = `merkle-tree:credential:${credentialId}`
-    await this.client.set(key, tree)
+    await this.client.setex(key, 600, tree)
   }
 
   async actionOccurred(actionId: string, hash: string) {
