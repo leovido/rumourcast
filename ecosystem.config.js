@@ -9,9 +9,9 @@ module.exports = {
   apps: [
     {
       name: "rumourcast-api",
-      script: "/root/.bun/bin/bun",
+      script: "bun",
       args: "run packages/api/src/index.ts",
-      cwd: "/root/rumourcast",
+      cwd: "/app",
       watch: false,
       env: {
         NODE_ENV: "production",
@@ -21,9 +21,9 @@ module.exports = {
     },
     {
       name: "rumourcast-updates",
-      script: "/root/.bun/bin/bun",
+      script: "bun",
       args: "run packages/api/scripts/updates.ts",
-      cwd: "/root/rumourcast",
+      cwd: "/app",
       watch: false,
       env: {
         NODE_ENV: "production",

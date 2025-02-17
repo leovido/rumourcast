@@ -17,9 +17,9 @@ export const getAction = async (actionId: string, proofs: ProofData[], data: any
   const roots = []
   for (const proof of proofs) {
     const verified = await merkleMembership.verify(proof)
-    // if (!verified) {
-    //   throw new Error('Invalid proof')
-    // }
+    if (!verified) {
+      throw new Error('Invalid proof')
+    }
 
     roots.push(proof.publicInputs[0])
   }
