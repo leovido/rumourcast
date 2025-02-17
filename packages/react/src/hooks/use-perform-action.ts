@@ -84,7 +84,7 @@ export const usePerformAction = ({
       setStatus({ status: 'success' })
       onSuccess?.(response.data)
     } catch (e) {
-      console.error(e)
+      console.error('failed to perform action:', e)
       setStatus({ status: 'error', error: 'Failed to perform action' })
       onError?.('Failed to perform action')
     }

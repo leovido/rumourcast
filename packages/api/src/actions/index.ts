@@ -14,13 +14,13 @@ export enum ActionType {
 }
 
 export const getAction = async (actionId: string, proofs: ProofData[], data: any) => {
+  console.log('getAction called with:', { actionId, proofs, data })
+  
   const roots = []
   for (const proof of proofs) {
+    console.log('Verifying proof:', proof)
     const verified = await merkleMembership.verify(proof)
-    // if (!verified) {
-    //   throw new Error('Invalid proof')
-    // }
-
+    console.log('Proof verification result:', verified)
     roots.push(proof.publicInputs[0])
   }
 

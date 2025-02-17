@@ -6,6 +6,14 @@ export class RedisService {
 
   private constructor(url: string) {
     this.client = new Redis(url)
+    
+    this.client.on('error', (error) => {
+      console.error('[Redis] Connection error:', error)
+    })
+
+    this.client.on('connect', () => {
+      console.log('[Redis] Connected successfully')
+    })
   }
 
   static getInstance(): RedisService {
@@ -40,7 +48,8 @@ export class RedisService {
   }
 
   async setMerkleTree(key: string, tree: string) {
-    await this.client.set(key, tree)
+    // time to live 600 seconds -> 10 min. Cache expires after that! -> rebuild merkleTree
+    await this.client.setex(key, 600, tree)
   }
 
   async getMerkleTreeForCredential(credentialId: string) {
@@ -49,7 +58,8 @@ export class RedisService {
 
   async setMerkleTreeForCredential(credentialId: string, tree: string) {
     const key = `merkle-tree:credential:${credentialId}`
-    await this.client.set(key, tree)
+    // time to live 600 seconds -> 10 min. Cache expires after that! -> rebuild merkleTree
+    await this.client.setex(key, 600, tree)
   }
 
   async actionOccurred(actionId: string, hash: string) {

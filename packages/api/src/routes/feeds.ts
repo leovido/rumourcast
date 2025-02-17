@@ -8,17 +8,25 @@ export const feedsRoutes = createElysia({ prefix: '/feeds' })
   .get(
     '/:fid/trending',
     async ({ params }) => {
-      let casts: Array<Cast>
+      try {
+        let casts: Array<Cast>
+        console.log('[feeds] Getting trending feed for FID:', params.fid)
 
-      const cached = await redis.getTrendingFeed(params.fid)
-      if (cached) {
-        casts = JSON.parse(cached)
-      } else {
-        const response = await neynar.getUserCasts(params.fid, 150)
-        casts = await buildTrendingFeed(params.fid, response.casts)
+        const cached = await redis.getTrendingFeed(params.fid)
+        if (cached) {
+          console.log('[feeds] Using cached trending feed')
+          casts = JSON.parse(cached)
+        } else {
+          console.log('[feeds] Cache miss, fetching from Neynar')
+          const response = await neynar.getUserCasts(params.fid, 150)
+          casts = await buildTrendingFeed(params.fid, response.casts)
+        }
+
+        return { data: await augmentCasts(casts) }
+      } catch (error) {
+        console.error('[feeds] Error getting trending feed:', error)
+        throw error
       }
-
-      return { data: await augmentCasts(casts) }
     },
     {
       params: t.Object({
